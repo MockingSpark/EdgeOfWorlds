@@ -16,9 +16,9 @@ enum TargetType {
 };
 
 enum EdgeSide {
-	MEDIEVAL,
-	TECH,
-	BOTH,
+	MEDIEVALSIDE,
+	TECHSIDE,
+	BOTHSIDE,
 	EITHER,
 	SAME,
 	OTHER

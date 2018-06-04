@@ -1,11 +1,12 @@
 #pragma once
 
 
-struct stats{
-	int PV;
-	int PM;
+struct Stats{
+	int HP;
 	int Strength;
 	int Defense;
+	int Power;
+	int Resist;
 	int Speed;
 };
 
