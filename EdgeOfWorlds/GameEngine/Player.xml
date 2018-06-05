@@ -6,7 +6,7 @@
       <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
       <Skill name="FireBall" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
     </Skills>
-    <Equipement name="Weak Gauntlet" munitions="-1" equipType="weapon">
+    <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
       <Descriptor>
         A very used gauntlet. Wow, it looks sooo old ...
       </Descriptor>
@@ -22,7 +22,7 @@
       <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
       <Skill name="FireBall" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
     </Skills>
-    <Equipement name="Infinity Gauntlet" munitions="-1" equipType="weapon">
+    <Equipement name="Infinity Gauntlet" munitions="1" equipType="weapon">
       <Descriptor>
         A cute gauntlet with five gemstones on it. It's use is easy as a snap.
       </Descriptor>
