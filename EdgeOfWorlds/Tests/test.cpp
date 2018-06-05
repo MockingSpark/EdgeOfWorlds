@@ -28,8 +28,8 @@ TEST(TestCharacter, Xml) {
 	EXPECT_EQ(c.getBaseStats().resist, 10);
 	EXPECT_EQ(c.getBaseStats().speed, 10);
 
-	EXPECT_TRUE(c.getSkill(0));
-	EXPECT_TRUE(c.getSkill(1));
+	EXPECT_EQ(c.getSkill(0)->name, "Hit");
+	EXPECT_EQ(c.getSkill(1)->name, "FireBall");
 
 	// TODO CharacterTestSuit
 }
@@ -108,5 +108,54 @@ TEST(TestEquipement, Construct)
 	EXPECT_NE(0, result1);
 
 	Equipement e(doc.child("Weapons").child("Equipement"));
+
+	EXPECT_EQ(e.getMunitions(), 1);
+	EXPECT_EQ(e.getEquipType(), Equipement::WEAPON);
+	EXPECT_EQ(e.getName(), "Infinity Gauntlet");
+	EXPECT_EQ(e.getDescription(), "A cute gauntlet with five gemstones on it. It's use is easy as a snap.");
+	//bonus stats <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
+	EXPECT_EQ(e.getBonuses().HP, 0);
+	EXPECT_EQ(e.getBonuses().strength, 14);
+	EXPECT_EQ(e.getBonuses().defense, 3);
+	EXPECT_EQ(e.getBonuses().power, 10);
+	EXPECT_EQ(e.getBonuses().resist, 3);
+	EXPECT_EQ(e.getBonuses().speed, 0);
+
+	EXPECT_EQ(e.useAttack()->name, "Hit");
+	EXPECT_EQ(e.useSkill()->name, "Half");
+
+}
+
+TEST(TestEquipement, UpdateStats)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("../GameEngine/Player.xml");
+	EXPECT_NE(0, result);
+
+	Character c(doc.child("lol").child("Character"));
+
+	pugi::xml_document doc1;
+	pugi::xml_parse_result result1 = doc1.load_file("../GameEngine/Equipement.xml");
+	EXPECT_NE(0, result1);
+
+	c.addEquipement(doc1.child("Weapons").child("Equipement"));
+	//bonus stats <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
+
+	EXPECT_EQ(c.getStats().HP, 10);
+	EXPECT_EQ(c.getStats().defense, 13);
+	EXPECT_EQ(c.getStats().strength, 24);
+	EXPECT_EQ(c.getStats().power, 20);
+	EXPECT_EQ(c.getStats().resist, 13);
+	EXPECT_EQ(c.getStats().speed, 10);
+	EXPECT_EQ(c.getBaseStats().HP, 10);
+	EXPECT_EQ(c.getBaseStats().defense, 10);
+	EXPECT_EQ(c.getBaseStats().strength, 10);
+	EXPECT_EQ(c.getBaseStats().power, 10);
+	EXPECT_EQ(c.getBaseStats().resist, 10);
+	EXPECT_EQ(c.getBaseStats().speed, 10);
+}
+
+TEST(TestEquipement, Add)
+{
 
 }
