@@ -47,7 +47,7 @@ Skill const * Equipement::useAttack()
 
 Skill const * Equipement::useSkill()
 {
-	return m_skill.get();
+	return m_skill.get(); 
 }
 
 Stats const & Equipement::getBonuses() const
