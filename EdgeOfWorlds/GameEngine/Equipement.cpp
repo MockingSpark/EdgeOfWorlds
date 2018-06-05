@@ -30,7 +30,7 @@ std::string Equipement::stringFromEquipType(EquipType t)
 
 Equipement::Equipement(pugi::xml_node& node) :
 	m_name(node.attribute("name").as_string()),
-	m_munitions(node.attribute("munitions").as_int()),
+	m_munitions(node.attribute("munition").as_int()),
 	m_bonus(node.child("Bonus")),
 	m_description(node.child("Descriptor").text().as_string())
 {
@@ -42,12 +42,12 @@ Equipement::Equipement(pugi::xml_node& node) :
 Skill const * Equipement::useAttack()
 {
 
-	return m_attack.get();
+	return nullptr;
 }
 
 Skill const * Equipement::useSkill()
 {
-	return m_skill.get();
+	return nullptr;
 }
 
 Stats const & Equipement::getBonuses() const

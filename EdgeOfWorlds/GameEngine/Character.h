@@ -40,8 +40,8 @@ protected:
 	std::string m_name;
 	int m_level;
 	int m_actualHP;
-	std::unique_ptr<Skill> m_skills[NB_SKILLS]; // TODO : revoir le stoquage des skills après le changement d'archi.
-	std::unique_ptr<Equipement> m_equipements[3]; 
+	std::unique_ptr<Skill> m_skills[NB_SKILLS];
+	std::unique_ptr<Equipement> m_equipements[3];
 	//std::vector<Status> m_activeStatus;
 	Stats m_stats;
 	Stats m_baseStats;

@@ -141,7 +141,7 @@ Stats const& Character::getStats() const
 	  return m_name;
   }
 
-  Skill const * Character::getSkill(int i) const // précond. 0 <= i < 6
+  Skill const * Character::getSkill(int i) const
   {
 	  return m_skills[i].get();
   }
