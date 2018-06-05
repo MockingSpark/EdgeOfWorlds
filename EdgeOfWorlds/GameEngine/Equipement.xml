@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Weapons>
   <!-- Gauntlets -->
-  <Equipement name="Infinity Gauntlet" munitions="1" equipType="weapon">
-    <Descriptor>A cute gauntlet with five gemstones on it. It's use is easy as a snap.</Descriptor>
+  <Equipement name="Infinity Gauntlet" munitions="-1" equipType="weapon">
+    <Descriptor>
+      A cute gauntlet with five gemstones on it. It's use is easy as a snap.
+    </Descriptor>
     <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
     <Attack name="Hit" knockback="1" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
     <Skill name="Half" knockback="0" modifier="150" pureDamage="0" isMagical="true" range="0" radius="1" accuracy="50" heal="false" charges="1" cost="1"/>
