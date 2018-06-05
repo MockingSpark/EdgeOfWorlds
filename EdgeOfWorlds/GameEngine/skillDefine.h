@@ -1,6 +1,6 @@
 #pragma once
 
-enum Target{
+enum TargetGroup{
 	ALL,
 	OTHERS,
 	AREA,

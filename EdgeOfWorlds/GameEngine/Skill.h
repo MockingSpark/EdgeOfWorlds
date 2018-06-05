@@ -5,26 +5,36 @@
 #include "PersoDefines.h"
 #include "mapDefines.h"
 #include "pugixml.hpp"
-#include "Character.h"
 
-//class SkillEffect;
 
 class Skill
 {
 public:
+	Skill(pugi::xml_node);
 
+	int getCharges() { return m_charges; };
+	void updateCharges() { m_charges -= cost; };
+	void refill() { m_charges = m_maxCharges; };
 
-	void use(Character const*) const;
-	pugi::xml_node spawnOnMap() const;
+public:
+	std::string const name;
+	int const knockback;
+	int const modifier;
+	int const pureDamage;
+	bool const isMagical;
+	int const range;
+	int const radius;
+	int const accuracy;
+	int const cost;
+	bool heal;
+	//pugi::xml_node const spawn;
+	// TargetGroup const m_targetGroup;
+	// TargetType const m_targetType;
+	// EdgeSide const m_targetSide;
+	// Type const m_type;
 
 protected:
-	std::string m_name;
-	int m_knockback;
-	//std::vector<SkillEffect> m_effects;
-	//JobFlag m_allowedJobs;
-	//Target m_target;
-	//TargetType m_targetType;
-	//EdgeSide m_targetSide;
-
+	int m_charges;
+	int const m_maxCharges;
 };
 

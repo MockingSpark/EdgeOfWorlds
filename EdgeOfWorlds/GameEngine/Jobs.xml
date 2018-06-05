@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Character name="Bob" HP="10" strength="10" defense="10" power="10" resistence="10" speed="10">
+ </Character>

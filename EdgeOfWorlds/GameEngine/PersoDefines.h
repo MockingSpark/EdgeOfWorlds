@@ -1,15 +1,14 @@
 #pragma once
+#include <pugixml.hpp>
 
 
-struct Stats{
+struct Stats {
+	Stats(pugi::xml_node node);
+
 	int HP;
-	int Strength;
-	int Defense;
-	int Power;
-	int Resist;
-	int Speed;
+	int strength;
+	int defense;
+	int power;
+	int resist;
+	int speed;
 };
-
-typedef int OnHitFlag;
-typedef int TypeFlag;
-typedef int JobFlag;

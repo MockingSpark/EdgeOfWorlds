@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Weapons>
+  <!-- Gauntlets -->
+  <Weapon name="Infinity Gauntlet">
+    <Descriptor>
+      A cute gauntlet with five gemstones on it. It's use is easy as a snap.
+    </Descriptor>
+  </Weapon>
+</Weapons>

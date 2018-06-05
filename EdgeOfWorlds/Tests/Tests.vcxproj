@@ -52,6 +52,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\GameEngine\Jobs.xml" />
+    <Xml Include="..\GameEngine\Equipement.xml" />
+    <Xml Include="..\GameEngine\Player.xml" />
+  </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
