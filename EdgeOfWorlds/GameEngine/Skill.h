@@ -12,7 +12,7 @@ class Skill
 public:
 	Skill(pugi::xml_node);
 
-	int getCharges() { return m_charges; };
+	int const & getCharges() const { return m_charges; } ;
 	void updateCharges() { m_charges -= cost; };
 	void refill() { m_charges = m_maxCharges; };
 

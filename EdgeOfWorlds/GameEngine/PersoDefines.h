@@ -5,6 +5,8 @@
 struct Stats {
 	Stats(pugi::xml_node node);
 
+	Stats& operator+=(Stats const &);
+
 	int HP;
 	int strength;
 	int defense;

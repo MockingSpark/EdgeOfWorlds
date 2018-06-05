@@ -10,3 +10,14 @@ Stats::Stats(pugi::xml_node node) :
 	speed(node.attribute("speed").as_int())
 {
 }
+
+Stats & Stats::operator+=(Stats const & s)
+{
+	HP += s.HP;
+	strength += s.strength;
+	defense += s.defense;
+	power += s.power;
+	resist += s.resist;
+	speed += s.speed;
+	return *this;
+}

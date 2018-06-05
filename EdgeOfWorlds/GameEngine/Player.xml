@@ -3,22 +3,32 @@
   <Character name="Bob" level="1">
     <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
     <Skills>
-      <Skill name="Hit" knockback="0" modifier="1" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
-      <Skill name="FireBall" knockback="0" modifier="1" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
+      <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
+      <Skill name="FireBall" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
     </Skills>
-    <!--
-  <Equipement></Equipement>
-  -->
+    <Equipement name="Weak Gauntlet" munitions="-1" equipType="weapon">
+      <Descriptor>
+        A very used gauntlet. Wow, it looks sooo old ...
+      </Descriptor>
+      <Bonus HP="0" strength="0" defense="0" power="0" resistence="0" speed="0"/>
+      <Attack name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
+      <Skill name="Upercut" knockback="0" modifier="110" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
+    </Equipement>
   </Character>
 
-  <Character2 name="Bob" level="1">
-    <Stats HP="22" strength="10" defense="10" power="10" resistence="10" speed="10"/>
+  <Character2 name="Sothan" level="1">
+    <Stats HP="22" strength="10" defense="7" power="10" resistence="10" speed="10"/>
     <Skills>
-      <Skill name="Hit" knockback="0" modifier="1" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
-      <Skill name="FireBall" knockback="0" modifier="1" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
+      <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
+      <Skill name="FireBall" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
     </Skills>
-    <!--
-  <Equipement></Equipement>
-  -->
+    <Equipement name="Infinity Gauntlet" munitions="-1" equipType="weapon">
+      <Descriptor>
+        A cute gauntlet with five gemstones on it. It's use is easy as a snap.
+      </Descriptor>
+      <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
+      <Attack name="Hit" knockback="1" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
+      <Skill name="Half" knockback="0" modifier="150" pureDamage="0" isMagical="true" range="0" radius="1" accuracy="50" heal="false" charges="1" cost="1"/>
+    </Equipement>
   </Character2>
 </lol>

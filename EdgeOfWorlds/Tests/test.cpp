@@ -31,10 +31,8 @@ TEST(TestCharacter, Xml) {
 	EXPECT_TRUE(c.getSkill(0));
 	EXPECT_TRUE(c.getSkill(1));
 
-	// TODO
+	// TODO CharacterTestSuit
 }
-
-
 TEST(TestCharacter, Hit) {
 
 	pugi::xml_document doc;
@@ -47,9 +45,8 @@ TEST(TestCharacter, Hit) {
 
 	fighter.hit(0, &target);
 
-	EXPECT_EQ(target.getStats().HP, 12);
+	EXPECT_EQ(target.getHP(), 12);
 }
-
 TEST(TestSkills, Xml) {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
@@ -59,7 +56,7 @@ TEST(TestSkills, Xml) {
 	EXPECT_EQ(s.accuracy, 100);
 	EXPECT_FALSE(s.isMagical);
 	EXPECT_EQ(s.knockback, 0);
-	EXPECT_EQ(s.modifier, 1);
+	EXPECT_EQ(s.modifier, 100);
 	EXPECT_EQ(s.name, "Hit");
 	EXPECT_EQ(s.pureDamage, 0);
 	EXPECT_EQ(s.radius, 1);
@@ -69,7 +66,6 @@ TEST(TestSkills, Xml) {
 	EXPECT_EQ(s.cost, 0);
 	//TODO : test spawn
 }
-
 TEST(TestSkills, Update) {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
@@ -91,11 +87,11 @@ TEST(TestSkills, addToCharacter)
 	Character c(doc.child("lol").child("Character"));
 	c.setSkill(1, doc.child("lol").child("Character").child("Skills").first_child());
 
-	Skill* s = c.getSkill(1);
+	Skill const* s = c.getSkill(1);
 	EXPECT_EQ(s->accuracy, 100);
 	EXPECT_FALSE(s->isMagical);
 	EXPECT_EQ(s->knockback, 0);
-	EXPECT_EQ(s->modifier, 1);
+	EXPECT_EQ(s->modifier, 100);
 	EXPECT_EQ(s->name, "Hit");
 	EXPECT_EQ(s->pureDamage, 0);
 	EXPECT_EQ(s->radius, 1);
@@ -103,4 +99,14 @@ TEST(TestSkills, addToCharacter)
 	EXPECT_FALSE(s->heal);
 	EXPECT_EQ(s->getCharges(), 1);
 	EXPECT_EQ(s->cost, 0);
+}
+
+TEST(TestEquipement, Construct)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Equipement.xml");
+	EXPECT_NE(0, result1);
+
+	Equipement e(doc.child("Weapons").child("Equipement"));
+
 }
