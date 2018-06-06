@@ -7,6 +7,7 @@
 #include "Skill.h"
 #include "Equipement.h"
 #include "Statut.h"
+#include "Elements.h"
 
 #define NB_SKILLS 4
 
@@ -50,7 +51,8 @@ protected:
 	std::vector<Statut> m_activeStatuts;
 	Stats m_stats;
 	Stats m_baseStats;
-
+	Weakness m_weaknesses[NB_ELEMENTS];
+	Weakness m_baseWeaknesses[NB_ELEMENTS];
 
 
 

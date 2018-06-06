@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Character.h"
 #include <assert.h>
+#include "Elements.h"
 /**
   * 
   */
@@ -10,9 +11,14 @@ Character::Character(pugi::xml_node& node) :
 	m_level(node.attribute("level").as_int()),
 	m_stats{node.child("Stats")},
 	m_baseStats{ node.child("Stats") },
-	m_actualHP(node.child("Stats").attribute("HP").as_int())
+	m_actualHP(node.child("Stats").attribute("HP").as_int()),
+	m_weaknesses{ W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE },
+	m_baseWeaknesses{ W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE }
 {
-
+	for (auto & a : node.child("Weaknesses").attributes())
+	{
+		m_weaknesses[elementFromString(a.name())] = weaknessFromString(a.as_string());
+	}
 	int i(0);
 	for (auto & n : node.child("Skills").children())
 	{
@@ -77,18 +83,18 @@ void Character::hit(int const& skillID, Character * target) const
 
 	int lostHP = 0;
 
-	if (m_skills[skillID]->isMagical && m_stats.power != 0){
-		lostHP = m_skills[skillID]->pureDamage +
-			(m_stats.power * m_stats.power * m_skills[skillID]->modifier) /
+	if (m_skills[skillID]->isMagical() && m_stats.power != 0){
+		lostHP = m_skills[skillID]->getPureDamage() +
+			(m_stats.power * m_stats.power * m_skills[skillID]->getModifier()) /
 			target->m_stats.resist /
 			100;	// les 100 du modifier en pourcentage
 	}
-	else if (m_skills[skillID]->isMagical) {
+	else if (m_skills[skillID]->isMagical()) {
 		lostHP = 0;
 	}
 	else {
-		lostHP = m_skills[skillID]->pureDamage +
-			(m_stats.strength * m_stats.strength * m_skills[skillID]->modifier) /
+		lostHP = m_skills[skillID]->getPureDamage() +
+			(m_stats.strength * m_stats.strength * m_skills[skillID]->getModifier()) /
 			target->m_stats.defense /
 			100;	// les 100 du modifier en pourcentage
 	}
@@ -98,7 +104,7 @@ void Character::hit(int const& skillID, Character * target) const
 		target->m_activeStatuts.emplace_back(s);
 	}
 
-	lostHP *= (m_skills[skillID]->heal ? -1 : 1);
+	lostHP = lostHP * (m_skills[skillID]->isHealer() ? -1 : 1) * (getModifierFromWeakness(target->m_weaknesses[m_skills[skillID]->getElement()])) / 100; // %
 	m_skills[skillID]->updateCharges();
 
 	target->getHit(lostHP);
@@ -130,6 +136,32 @@ void Character::updateStats()
 			m_stats += i->getBonuses();
 	}
 	m_actualHP = (m_stats.HP < m_actualHP) ? m_stats.HP : m_actualHP;
+
+	
+	m_weaknesses[E_DARK] = m_baseWeaknesses[E_DARK];
+	m_weaknesses[E_EARTH] = m_baseWeaknesses[E_EARTH];
+	m_weaknesses[E_FIRE] = m_baseWeaknesses[E_FIRE];
+	m_weaknesses[E_HOLY] = m_baseWeaknesses[E_HOLY];
+	m_weaknesses[E_NONE] = m_baseWeaknesses[E_NONE];
+	m_weaknesses[E_THUNDER] = m_baseWeaknesses[E_THUNDER];
+	m_weaknesses[E_WATER] = m_baseWeaknesses[E_WATER];
+	m_weaknesses[E_WIND] = m_baseWeaknesses[E_WIND];
+	for (auto & j : m_equipements)
+	{
+		if (j != nullptr)
+		{
+			m_weaknesses[E_DARK] = combineWeakness(m_weaknesses[E_DARK], j->getWeakness(E_DARK));
+			m_weaknesses[E_EARTH] = combineWeakness(m_weaknesses[E_EARTH], j->getWeakness(E_EARTH));
+			m_weaknesses[E_FIRE] = combineWeakness(m_weaknesses[E_FIRE], j->getWeakness(E_FIRE));
+			m_weaknesses[E_HOLY] = combineWeakness(m_weaknesses[E_HOLY], j->getWeakness(E_HOLY));
+			m_weaknesses[E_NONE] = combineWeakness(m_weaknesses[E_NONE], j->getWeakness(E_NONE));
+			m_weaknesses[E_THUNDER] = combineWeakness(m_weaknesses[E_THUNDER], j->getWeakness(E_THUNDER));
+			m_weaknesses[E_WATER] = combineWeakness(m_weaknesses[E_WATER], j->getWeakness(E_WATER));
+			m_weaknesses[E_WIND] = combineWeakness(m_weaknesses[E_WIND], j->getWeakness(E_WIND));
+
+		}
+	}
+	
 
 }
 

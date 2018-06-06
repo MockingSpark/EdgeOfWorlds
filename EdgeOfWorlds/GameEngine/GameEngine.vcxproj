@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Equipement.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="Elements.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="skillDefine.h" />
     <ClInclude Include="Manual.h" />
@@ -162,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Elements.cpp" />
     <ClCompile Include="Equipement.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PersoDefines.cpp" />

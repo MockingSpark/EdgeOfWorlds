@@ -26,6 +26,7 @@ public:
 	int const & getMunitions() const;
 	EquipType const & getEquipType() const;
 	std::string const & getDescription() const;
+	Weakness const & getWeakness(Element e) const { return m_weaknesses[e]; };
 
 private:
 	std::string m_name;
@@ -36,6 +37,7 @@ private:
 	int m_munitions;
 	EquipType m_type;
 	std::string m_description;
+	Weakness m_weaknesses[NB_ELEMENTS];
 
 };
 

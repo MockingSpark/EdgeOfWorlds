@@ -33,11 +33,18 @@ Equipement::Equipement(pugi::xml_node& node) :
 	m_name(node.attribute("name").as_string()),
 	m_munitions(node.attribute("munitions").as_int()),
 	m_bonus(node.child("Bonus")),
+	m_weaknesses{ W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE },
 	m_description(node.child("Descriptor").text().as_string())
 {
 	m_attack = std::make_unique<Skill>(node.child("Attack"));
     m_skill = std::make_unique<Skill>(node.child("Skill"));
 	m_type = equipTypeFromString(node.attribute("equipType").as_string());
+	auto n = node.child("Weakness");
+	auto blabla = n.attribute("fire");
+	for (auto & a : n.attributes())
+	{
+		m_weaknesses[elementFromString(a.name())] = weaknessFromString(a.as_string());
+	}
 }
 
 Skill const * Equipement::useAttack()
