@@ -43,7 +43,7 @@ std::string Statut::stringFromStatut(StatutEnum t)
 	case FREEZE:
 		return "freeze";
 	default:
-		return "";
+		return "none";
 	}
 }
 

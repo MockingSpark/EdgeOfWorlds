@@ -2,7 +2,7 @@
 #include <string>
 #include "../GameEngine/GameEngine.h"
 
-TEST(TestCaseName, TestName) {
+TEST(Test00, Test) {
   EXPECT_EQ(1, 1);
   EXPECT_TRUE(true);
 }
@@ -29,6 +29,8 @@ TEST(TestCharacter, Xml) {
 
 	EXPECT_EQ(c.getSkill(0)->name, "Hit");
 	EXPECT_EQ(c.getSkill(1)->name, "FireBall");
+
+	EXPECT_EQ(c.getSkill(0)->getStatuts().size(), 1);
 
 	// TODO CharacterTestSuit
 }
@@ -154,7 +156,13 @@ TEST(TestEquipement, Add)
 
 TEST(TestStatut, Create)
 {
-	Statut s(POISON, 10, 10); // TODO from xml
+	std::string xml(R"(<?xml version = "1.0"?>
+<Statut effect="poison" power="10" duration="3"/>
+	)");
+
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_string(xml.c_str());
+	Statut s(doc.child("Statut"));
 
 	EXPECT_EQ(s.getEffect(), POISON);
 	EXPECT_EQ(s.getPower(), 10);
@@ -163,12 +171,18 @@ TEST(TestStatut, Create)
 
 TEST(TestStatut, WithCharacter)
 {
-	Statut s(POISON, 3, 10);
+	std::string xml(R"(<?xml version = "1.0"?>
+<Statut effect="poison" power="10" duration="3"/>
+	)");
 
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("../GameEngine/Player.xml");
+	pugi::xml_parse_result result = doc.load_string(xml.c_str());
+	Statut s(doc.child("Statut"));
 
-	Character c(doc.child("lol").child("Character"));
+	pugi::xml_document doc1;
+	pugi::xml_parse_result result1 = doc1.load_file("../GameEngine/Player.xml");
+
+	Character c(doc1.child("lol").child("Character"));
 
 	c.addStatut(s);
 	EXPECT_EQ(c.getActiveStatuts().size(), 1);

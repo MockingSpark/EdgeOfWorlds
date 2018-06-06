@@ -17,4 +17,8 @@ Skill::Skill(pugi::xml_node node) :
 	spawn(node.child("Spawn"))*/
 {
 
+	for (auto n : node.children("Statut"))
+	{
+		statuts.push_back(Statut(n));
+	}
 }

@@ -93,7 +93,7 @@ void Character::hit(int const& skillID, Character * target) const
 			100;	// les 100 du modifier en pourcentage
 	}
 
-	for (auto & s : m_skills[skillID]->statut)
+	for (auto & s : m_skills[skillID]->getStatuts())
 	{
 		target->m_activeStatuts.emplace_back(s);
 	}

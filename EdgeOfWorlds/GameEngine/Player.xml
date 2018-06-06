@@ -3,7 +3,9 @@
   <Character name="Bob" level="1">
     <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
     <Skills>
-      <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
+      <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0">
+        <Statut effect="poison" power="10" duration="3"/>
+      </Skill>
       <Skill name="FireBall" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
     </Skills>
     <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">

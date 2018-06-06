@@ -17,6 +17,8 @@ public:
 	void updateCharges() { m_charges -= cost; };
 	void refill() { m_charges = m_maxCharges; };
 
+	std::vector<Statut> const & getStatuts() const { return statuts; };
+
 public:
 	std::string const name;
 	int const knockback;
@@ -28,7 +30,6 @@ public:
 	int const accuracy;
 	int const cost;
 	bool const heal;
-	std::vector<Statut> const statut;
 	//pugi::xml_node const spawn;
 	// TargetGroup const m_targetGroup;
 	// TargetType const m_targetType;
@@ -36,6 +37,7 @@ public:
 	// Type const m_type;
 
 protected:
+	std::vector<Statut> statuts;
 	int m_charges;
 	int const m_maxCharges;
 };
