@@ -11,7 +11,6 @@ TEST(TestCharacter, Xml) {
 
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
-	EXPECT_NE(0, result1);
 
 	Character c(doc.child("lol").child("Character"));
 	EXPECT_EQ(c.getName(), "Bob");
@@ -37,7 +36,6 @@ TEST(TestCharacter, Hit) {
 
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
-	EXPECT_NE(0, result1);
 
 	Character fighter(doc.child("lol").child("Character")); 
 
@@ -50,7 +48,6 @@ TEST(TestCharacter, Hit) {
 TEST(TestSkills, Xml) {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
-	EXPECT_NE(0, result1);
 
 	Skill s(doc.child("lol").child("Character").child("Skills").first_child());
 	EXPECT_EQ(s.accuracy, 100);
@@ -69,7 +66,6 @@ TEST(TestSkills, Xml) {
 TEST(TestSkills, Update) {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
-	EXPECT_NE(0, result1);
 
 	Skill s(doc.child("lol").child("Character").child("Skills").first_child().next_sibling());
 	s.updateCharges();
@@ -82,7 +78,6 @@ TEST(TestSkills, addToCharacter)
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
-	EXPECT_NE(0, result1);
 
 	Character c(doc.child("lol").child("Character"));
 	c.setSkill(1, doc.child("lol").child("Character").child("Skills").first_child());
@@ -105,7 +100,6 @@ TEST(TestEquipement, Construct)
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Equipement.xml");
-	EXPECT_NE(0, result1);
 
 	Equipement e(doc.child("Weapons").child("Equipement"));
 
@@ -130,13 +124,11 @@ TEST(TestEquipement, UpdateStats)
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file("../GameEngine/Player.xml");
-	EXPECT_NE(0, result);
 
 	Character c(doc.child("lol").child("Character"));
 
 	pugi::xml_document doc1;
 	pugi::xml_parse_result result1 = doc1.load_file("../GameEngine/Equipement.xml");
-	EXPECT_NE(0, result1);
 
 	c.addEquipement(doc1.child("Weapons").child("Equipement"));
 	//bonus stats <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
@@ -157,5 +149,37 @@ TEST(TestEquipement, UpdateStats)
 
 TEST(TestEquipement, Add)
 {
+	// Disparu dans le pb de Git eu au commit Spoiler Aleeeert ! TODO
+}
+
+TEST(TestStatut, Create)
+{
+	Statut s(POISON, 10, 10); // TODO from xml
+
+	EXPECT_EQ(s.getEffect(), POISON);
+	EXPECT_EQ(s.getPower(), 10);
+	EXPECT_FALSE(s.isExpired());
+}
+
+TEST(TestStatut, WithCharacter)
+{
+	Statut s(POISON, 3, 10);
+
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("../GameEngine/Player.xml");
+
+	Character c(doc.child("lol").child("Character"));
+
+	c.addStatut(s);
+	EXPECT_EQ(c.getActiveStatuts().size(), 1);
+	EXPECT_EQ(c.getActiveStatuts()[0].getEffect(), POISON);
+
+	for (int i = 1; i <= 3; i++)
+	{
+		EXPECT_EQ(c.getActiveStatuts().size(), 1);
+		c.onTurnEnd();
+		EXPECT_EQ(c.getHP(), 10 - i);
+	}
+	EXPECT_EQ(c.getActiveStatuts().size(), 0);
 
 }

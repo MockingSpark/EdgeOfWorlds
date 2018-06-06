@@ -7,7 +7,7 @@ class Equipement
 {
 public:
 
-	static enum EquipType {
+	enum EquipType {
 		ARMOR = 0,
 		WEAPON = 1,
 		MISC = 2,

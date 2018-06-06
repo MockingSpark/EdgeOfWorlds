@@ -26,6 +26,7 @@ std::string Equipement::stringFromEquipType(EquipType t)
 		return "misc";
 		break;
 	}
+	return "";
 }
 
 Equipement::Equipement(pugi::xml_node& node) :

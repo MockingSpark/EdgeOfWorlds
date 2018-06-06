@@ -14,3 +14,17 @@ struct Stats {
 	int resist;
 	int speed;
 };
+
+enum StatutEnum {
+	EFFECT,
+	POISON,
+	WEAK,
+	BRITTLE,
+	MUTE,
+	SLOW,
+	SOFTHEAL,
+	STRONG,
+	UNBREAKABLE,
+	QUICK,
+	FREEZE,
+};

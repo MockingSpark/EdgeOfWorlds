@@ -5,6 +5,7 @@
 #include "PersoDefines.h"
 #include "mapDefines.h"
 #include "pugixml.hpp"
+#include "Statut.h"
 
 
 class Skill
@@ -26,7 +27,8 @@ public:
 	int const radius;
 	int const accuracy;
 	int const cost;
-	bool heal;
+	bool const heal;
+	std::vector<Statut> const statut;
 	//pugi::xml_node const spawn;
 	// TargetGroup const m_targetGroup;
 	// TargetType const m_targetType;

@@ -156,6 +156,7 @@
     <ClInclude Include="mapDefines.h" />
     <ClInclude Include="PersoDefines.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="Statut.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -165,6 +166,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PersoDefines.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="Statut.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
