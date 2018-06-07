@@ -9,6 +9,8 @@
 #include "Elements.h"
 
 
+// TODO accuracy
+
 class Skill
 {
 protected:

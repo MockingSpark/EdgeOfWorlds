@@ -7,7 +7,7 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -15,92 +15,75 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="include\tmxlite\Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="include\tmxlite\FreeFuncs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Manual.h">
+    <ClInclude Include="include\tmxlite\ImageLayer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
+    <ClInclude Include="include\tmxlite\Layer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PersoDefines.h">
+    <ClInclude Include="include\tmxlite\Map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mapDefines.h">
+    <ClInclude Include="include\tmxlite\Object.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Skill.h">
+    <ClInclude Include="include\tmxlite\ObjectGroup.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="skillDefine.h">
+    <ClInclude Include="include\tmxlite\Property.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="include\tmxlite\TileLayer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngine.h">
+    <ClInclude Include="include\tmxlite\Tileset.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Equipement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Statut.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Elements.h">
+    <ClInclude Include="include\tmxlite\Types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="src\FreeFuncs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
+    <ClCompile Include="src\ImageLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Skill.cpp">
+    <ClCompile Include="src\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="src\miniz.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PersoDefines.cpp">
+    <ClCompile Include="src\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Equipement.cpp">
+    <ClCompile Include="src\ObjectGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Statut.cpp">
+    <ClCompile Include="src\Property.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Elements.cpp">
+    <ClCompile Include="src\TileLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngine.cpp">
+    <ClCompile Include="src\Tileset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\detail\pugixml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Skills.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-    <Xml Include="Characters.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-    <Xml Include="Equipement.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-    <Xml Include="Player.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Assets\testMap.tmx">
-      <Filter>Resource Files</Filter>
+    <None Include="include\tmxlite\Types.inl">
+      <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
 </Project>

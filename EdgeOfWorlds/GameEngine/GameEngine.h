@@ -7,3 +7,9 @@
 #include "Skill.h"
 #include "skillDefine.h"
 #include "Elements.h"
+
+class GameEngine
+{
+public:
+	int run(); 
+};

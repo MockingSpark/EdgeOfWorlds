@@ -2,26 +2,43 @@
 
 #include <vector>
 #include "Character.h"
-
-class Tile
-{
-protected:
-	Character* m_perso;
-	//sf::Sprite m_sprite;
-};
+#include <tmxlite/Map.hpp>
+#include <tmxlite/TileLayer.hpp>
+#include <SFML/Graphics.hpp>
 
 class Map
 {
+
 public:
+	Map(std::string);
 
-
-	Tile & operator()(size_t i, size_t j);
-	void MakeAttack(Character const*, int);
+	void draw(sf::RenderTarget & t);
 
 protected:
-	size_t m_rows;
-	size_t m_cols;
-	std::vector<Tile> m_map;
+	
+	enum Side {
+		TECH,
+		MEDIEVAL,
+	};
 
+	struct Tile {
+		Position pos;
+		std::shared_ptr<Character> entity;
+		std::shared_ptr<sf::Sprite> sprite;
+	};
+
+	struct Position {
+		int x;
+		int y;
+		Side side;
+	};
+
+	tmx::Map m_map;
+
+	std::vector<Tile> m_techSide;
+	std::vector<Tile> m_medievalSide;
+
+	Tile * m_activeTile;
+	// TODO
 };
 
