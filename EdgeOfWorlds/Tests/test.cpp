@@ -28,7 +28,7 @@ TEST(TestCharacter, Xml) {
 	EXPECT_EQ(c.getBaseStats().speed, 10);
 
 	EXPECT_EQ(c.getSkill(0)->getName(), "Hit");
-	EXPECT_EQ(c.getSkill(1)->getName(), "FireBall");
+	EXPECT_EQ(c.getSkill(1)->getName(), "Upercut");
 
 	EXPECT_EQ(c.getSkill(0)->getStatuts().size(), 1);
 
@@ -68,7 +68,7 @@ TEST(TestSkills, Xml) {
 	Skill s(doc.child("lol").child("Character").child("Skills").first_child());
 	EXPECT_EQ(s.getAccuracy(), 100);
 	EXPECT_FALSE(s.isMagical());
-	EXPECT_EQ(s.getKnockback(), 0);
+	EXPECT_EQ(s.getRepel(), 0);
 	EXPECT_EQ(s.getModifier(), 100);
 	EXPECT_EQ(s.getName(), "Hit");
 	EXPECT_EQ(s.getPureDamage(), 0);
@@ -96,12 +96,12 @@ TEST(TestSkills, addToCharacter)
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
 
 	Character c(doc.child("lol").child("Character"));
-	c.setSkill(1, doc.child("lol").child("Character").child("Skills").first_child());
+	c.setSkill(2, doc.child("lol").child("Character").child("Skills").first_child());
 
-	Skill const* s = c.getSkill(1);
+	Skill const* s = c.getSkill(2);
 	EXPECT_EQ(s->getAccuracy(), 100);
 	EXPECT_FALSE(s->isMagical());
-	EXPECT_EQ(s->getKnockback(), 0);
+	EXPECT_EQ(s->getRepel(), 0);
 	EXPECT_EQ(s->getModifier(), 100);
 	EXPECT_EQ(s->getName(), "Hit");
 	EXPECT_EQ(s->getPureDamage(), 0);

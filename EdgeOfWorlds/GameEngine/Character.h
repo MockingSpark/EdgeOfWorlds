@@ -21,9 +21,7 @@ public:
 	//Character(pugi::xml_node&, int const);
 
 	void  getHit(int const);
-	void  hit(int const& , Character* ) const;
-	//void  addStatus   (std::string const);
-	//void  removeStatus(std::string const);
+	void  hit(int const& , Character* );
 
 	void setSkill( int, pugi::xml_node& );
 	void updateStats();
@@ -41,12 +39,13 @@ public:
 	Equipement const * getEquipement(Equipement::EquipType) const;
 	int const & getHP() const;
 	std::vector<Statut> const & getActiveStatuts() const;
+	int const getIncreaseness(Element) const;
 
 protected:
 	std::string m_name;
 	int m_level;
 	int m_actualHP;
-	std::unique_ptr<Skill> m_skills[NB_SKILLS]; // TODO : revoir le stoquage des skills après le changement d'archi.
+	std::unique_ptr<Skill> m_skills[NB_SKILLS +2]; // nb skills + 2 base attck
 	std::unique_ptr<Equipement> m_equipements[3]; 
 	std::vector<Statut> m_activeStatuts;
 	Stats m_stats;

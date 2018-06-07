@@ -1,25 +1,25 @@
 #pragma once
 
-enum TargetGroup{
-	ALL,
-	OTHERS,
-	AREA,
-	ONE
+enum SkillRange{
+	R_AREA,
+	R_TEAM,
+	R_OTHERS,
+	R_ALL
 };
 
-enum TargetType {
-	TEAM,
-	ENEMY,
-	BOTH,
-	SELF,
-	STAGE
+enum TargetTeam {
+	T_TEAM,
+	T_ENEMY,
+	T_BOTH,
+	T_SELF,
+	T_STAGE
 };
 
 enum EdgeSide {
-	MEDIEVALSIDE,
-	TECHSIDE,
-	BOTHSIDE,
-	EITHER,
-	SAME,
-	OTHER
+	S_MEDIEVAL,
+	S_TECH,
+	S_BOTH,
+	S_EITHER,
+	S_SAME,
+	S_OTHER
 };

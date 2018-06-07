@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root></root>
+<root>
+  <Skill name="Hit">
+    <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+    <Usage charges="1" cost="0"/>
+    <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+      <!--element="none"-->
+      <!-- <Statut effect="poison" power="10" duration="3"/> -->
+    </Effect>
+    <Recoil power="0">
+      <!-- % -->
+      <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+    </Recoil>
+  </Skill>
+</root>

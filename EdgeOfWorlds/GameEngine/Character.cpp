@@ -76,7 +76,7 @@ void Character::getHit(int const attPower)
 	}
 }
 
-void Character::hit(int const& skillID, Character * target) const
+void Character::hit(int const& skillID, Character * target)
 {
 	// Pre-condition : skills[skillID] != NULL
 	assert(m_skills[skillID] != nullptr);
@@ -103,14 +103,15 @@ void Character::hit(int const& skillID, Character * target) const
 	{
 		target->m_activeStatuts.emplace_back(s);
 	}
-
-	lostHP = lostHP * (m_skills[skillID]->isHealer() ? -1 : 1) * (getModifierFromWeakness(target->m_weaknesses[m_skills[skillID]->getElement()])) / 100; // %
+	int weaknessModifier = (getModifierFromWeakness(target->m_weaknesses[m_skills[skillID]->getElement()]));
+	int increaseModifier = target->getIncreaseness(m_skills[skillID]->getElement());
+	lostHP = lostHP * (m_skills[skillID]->isHealer() ? -1 : 1) * weaknessModifier * increaseModifier / 10000; // % %
 	m_skills[skillID]->updateCharges();
 
 	target->getHit(lostHP);
 }
 
-void Character::setSkill(int i, pugi::xml_node & node)
+void Character::setSkill(int i, pugi::xml_node & node) // 2 <= i < 6
 {
 	if (!m_skills[i].operator bool())
 	{
@@ -212,6 +213,18 @@ Stats const& Character::getStats() const
 
   Skill const * Character::getSkill(int i) const // précond. 0 <= i < 6
   {
+	  // les skills 1 & 2 sont définis par l'arme si elle existe
+	  if (i < 2)
+	  {
+		  if (m_equipements[Equipement::WEAPON].operator bool())
+		  {
+			  if (i == 0)
+				  return m_equipements[Equipement::WEAPON]->useAttack();
+			  else
+				  return m_equipements[Equipement::WEAPON]->useSkill();
+		  }
+	  }
+	 
 	  return m_skills[i].get();
   }
 
@@ -228,6 +241,16 @@ Stats const& Character::getStats() const
   std::vector<Statut> const & Character::getActiveStatuts() const
   {
 	  return m_activeStatuts;
+  }
+
+  int const Character::getIncreaseness(Element el) const
+  {
+	  int coef = 1;
+	  for (auto & e : m_equipements) {
+		  if (e)
+			 coef *= e->getIncreaseness(el);
+	  }
+	  return coef;
   }
 
   void Character::applyUniqueStatut(int i)

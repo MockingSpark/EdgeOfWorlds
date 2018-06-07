@@ -3,26 +3,88 @@
   <Character name="Bob" level="1">
     <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
     <Skills>
-      <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0">
-        <Statut effect="poison" power="10" duration="3"/>
+      <Skill name="Hit">
+        <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+        <Usage charges="1" cost="0"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+          <!--element="none"-->
+          <!-- <Statut effect="poison" power="10" duration="3"/> -->
+        </Effect>
+        <Recoil power="0">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
       </Skill>
-      <Skill name="FireBall" element="fire" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
+      <Skill name="FireBall">
+        <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+        <Usage charges="3" cost="1"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+          <Statut effect="poison" power="10" duration="3"/>
+        </Effect>
+        <Recoil power="0">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
+      </Skill>
     </Skills>
     <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
       <Descriptor>
         A very used gauntlet. Wow, it looks sooo old ...
       </Descriptor>
       <Bonus HP="0" strength="0" defense="0" power="0" resistence="0" speed="0"/>
-      <Attack name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
-      <Skill name="Upercut" knockback="0" modifier="110" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
+      <Attack name="Hit">
+        <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+        <Usage charges="1" cost="0"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+          <!--element="none"-->
+          <Statut effect="poison" power="10" duration="3"/>
+        </Effect>
+        <Recoil power="0">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
+      </Attack>
+      <Skill name="Upercut">
+        <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+        <Usage charges="1" cost="0"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="110" isMagical="false" >
+          <!--element="none"-->
+          <!-- <Statut effect="poison" power="10" duration="3"/> -->
+        </Effect>
+        <Recoil power="0">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
+      </Skill>
     </Equipement>
   </Character>
 
   <Character2 name="Sothan" level="1">
     <Stats HP="22" strength="10" defense="7" power="10" resistence="10" speed="10"/>
     <Skills>
-      <Skill name="Hit" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
-      <Skill name="FireBall" knockback="0" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="3" cost="1"/>
+      <Skill name="Hit">
+        <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+        <Usage charges="1" cost="0"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+          <!--element="none"-->
+          <!-- <Statut effect="poison" power="10" duration="3"/> -->
+        </Effect>
+        <Recoil power="0">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
+      </Skill>
+      <Skill name="FireBall">
+        <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+        <Usage charges="3" cost="1"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+          <Statut effect="poison" power="10" duration="3"/>
+        </Effect>
+        <Recoil power="0">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
+      </Skill>
     </Skills>
     <Equipement name="Infinity Gauntlet" munitions="1" equipType="weapon">
       <Descriptor>
@@ -30,8 +92,33 @@
       </Descriptor>
       <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
       <Weakness fire="weak"/>
-      <Attack name="Hit" knockback="1" modifier="100" pureDamage="0" isMagical="false" range="1" radius="1" accuracy="100" heal="false" charges="1" cost="0"/>
-      <Skill name="Half" knockback="0" modifier="150" pureDamage="0" isMagical="true" range="0" radius="1" accuracy="50" heal="false" charges="1" cost="1"/>
+      <Attack name="Hit">
+        <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+        <Usage charges="1" cost="0"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+          <!--element="none"-->
+          <!-- <Statut effect="poison" power="10" duration="3"/> -->
+        </Effect>
+        <Recoil power="0">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
+      </Attack>
+      <Skill name="Half">
+        <Target range="0" radius="1" accuracy="50" side="both" team="any" reachable="others"/>
+        <Usage charges="1" cost="1"/>
+        <Effect repel="0" pureDamage="0" heal="false"  modifier="150" isMagical="true" >
+          <!--element="none"-->
+          <!-- <Statut effect="poison" power="10" duration="3"/> -->
+        </Effect>
+        <Recoil power="100">
+          <!-- % -->
+          <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+        </Recoil>
+      </Skill>
     </Equipement>
   </Character2>
+
+  
+
 </lol>
