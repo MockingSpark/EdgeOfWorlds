@@ -188,6 +188,8 @@
     <Xml Include="Equipement.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Assets\maps\exampleMap.tmx" />
+    <None Include="..\Assets\maps\tileset.tsx" />
     <None Include="..\Assets\testMap.tmx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

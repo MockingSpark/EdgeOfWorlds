@@ -102,5 +102,11 @@
     <None Include="..\Assets\testMap.tmx">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Assets\maps\exampleMap.tmx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Assets\maps\tileset.tsx">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -4,9 +4,9 @@
 
 int GameEngine::run()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML window");
 
-	Map map("../Assets/testMap.tmx");
+	Map map("..\\Assets\\maps\\exampleMap.tmx");
 
 	while (window.isOpen())
 	{
@@ -18,7 +18,7 @@ int GameEngine::run()
 		}
 
 		window.clear(sf::Color::Black);
-		map.draw(window);
+		map.draw(window, MEDIEVAL);
 		window.display();
 	}
 	return EXIT_SUCCESS;

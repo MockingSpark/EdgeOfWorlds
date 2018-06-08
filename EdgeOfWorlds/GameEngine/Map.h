@@ -6,39 +6,57 @@
 #include <tmxlite/TileLayer.hpp>
 #include <SFML/Graphics.hpp>
 
+#define MOVEMENT_COUNT 3 // TODO ajouter une stat de mvt
+#define ASSETS_PATH "..\\Assets\\maps\\tileset.tsx"
+
+
 class Map
 {
+protected:
+
+	struct Tile {
+
+		Tile(Position&);
+
+		Position pos;
+
+		std::shared_ptr<Character> entity;
+		sf::Sprite sprite;
+	};
 
 public:
 	Map(std::string);
 
-	void draw(sf::RenderTarget & t);
+	void draw(sf::RenderTarget & t, Side);
+
+	bool addCharacter(std::weak_ptr<Character> character, Position p);
+
+	Tile& tile(Position p) { return m_tileList[(m_ySize - p.y - 1) * m_xSize + p.x]; };
 
 protected:
+
 	
-	enum Side {
-		TECH,
-		MEDIEVAL,
+
+
+
+	std::vector<Tile> m_tileList;
+
+	Tile * m_tileToPlay;
+	Tile * m_cursor;
+
+	std::map<Position, std::shared_ptr<Character>> m_fighters;
+
+	int m_xSize, m_ySize;
+
+	struct TileSet {
+		TileSet() : tmx(ASSETS_PATH) {};
+
+		tmx::Tileset tmx;
+		sf::Texture texture;
 	};
 
-	struct Tile {
-		Position pos;
-		std::shared_ptr<Character> entity;
-		std::shared_ptr<sf::Sprite> sprite;
-	};
+	TileSet m_tileset;
 
-	struct Position {
-		int x;
-		int y;
-		Side side;
-	};
-
-	tmx::Map m_map;
-
-	std::vector<Tile> m_techSide;
-	std::vector<Tile> m_medievalSide;
-
-	Tile * m_activeTile;
 	// TODO
 };
 
