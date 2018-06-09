@@ -9,8 +9,11 @@
 
 
 
-Map::Map(std::string s)
+Map::Map(std::string s) :
+	m_cursor(Position{0,0, TECH})
 {
+	m_tileToPlay = nullptr;
+
 	tmx::Map m_map;
 	
 	
@@ -84,55 +87,77 @@ Map::Map(std::string s)
 
 	for (int side = 0; side < 2; side++)
 	{
-		for (unsigned int x = 0; x < mapSize.x; x++)
+		for (unsigned int y = 0; y < mapSize.y; y++)
 		{
-			for (unsigned int y = 0; y < mapSize.y; y++)
+			for (unsigned int x = 0; x < mapSize.x; x++)
 			{
-				int id = (m_xSize -x -1) * mapSize.y + y;
-
 				Position p = { x, y, (side == 0 ? TECH : MEDIEVAL) };
-				Tile tile(p);
+				Tile tmpTile(p);
+				int id = tileID(p);
 
-				tile.entity = nullptr;
-				tile.sprite.setTexture(m_tileset.texture);
 
-				auto idIndex = (side == 0 ? tileIDsTech[id].ID : tileIDsMed[id].ID) - m_tileset.tmx.getFirstGID();
+				tmpTile.entity = nullptr;
+				tmpTile.sprite.setTexture(m_tileset.texture);
+
+				auto idIndex = (side == 0 ? tileIDsTech[id].ID : tileIDsMed[id - m_xSize*m_ySize].ID) - m_tileset.tmx.getFirstGID();
 				sf::Vector2i tileIndex(idIndex % m_tileset.tmx.getColumnCount(), idIndex / m_tileset.tmx.getColumnCount());
 				tileIndex.x *= tileSize.x;
 				tileIndex.y *= tileSize.y;
 
 				sf::IntRect tileRect(tileIndex.x, tileIndex.y, tileSize.x,tileSize.y);
-				tile.sprite.setTextureRect(tileRect);
+				tmpTile.sprite.setTextureRect(tileRect);
 
 				//tile.sprite.setOrigin(tileSize.x / 2, tileSize.y / 2);
 
-				tile.sprite.setPosition((x + y)*m_tileset.tmx.getTileSize().x /2, 
+				tmpTile.sprite.setPosition((x + y)*m_tileset.tmx.getTileSize().x /2,
 										(y - x + m_xSize - 1)*m_tileset.tmx.getTileSize().y /4); // isometric
 
-				m_tileList.push_back(tile);
+				m_tileList.push_back(tmpTile);
 			}
 		}
 	}
+
+
+	sf::Image imgCur;
+
+	if (!imgCur.loadFromFile("../Assets/sprites/cursor.png"))
+	{
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		textCur.loadFromImage(imgCur);
+		m_cursor.sprite.setTexture(textCur);
+	}
+	m_cursor.pos = { 0, 0, TECH };
+	m_cursor.sprite.setPosition(tile({ 0, 0, TECH }).sprite.getPosition());
 	
 }
 
-void Map::draw(sf::RenderTarget & t, Side s)
+void Map::draw(sf::RenderTarget & t)
 {
-		for (int x = 0; x < m_xSize; x++)
+		for (int x = m_xSize -1; x >=0; x--)
 		{
 			for (int y = 0; y < m_ySize; y++)
 			{
-				int id = (m_ySize - y - 1) * m_xSize + x;
+				int id = tileID(Position{ x, y, m_viewSide });
+				int idOtherSide = (id + m_xSize * m_ySize) % (m_xSize * m_ySize * 2);
 
-				int offset = ((s == MEDIEVAL) ? 1 : 0) * (m_xSize*m_ySize);
+				t.draw(m_tileList[id].sprite);
 
-				t.draw(m_tileList[id + offset ].sprite);
-
-				if (m_tileList[id + offset].entity != nullptr)
+				if (m_cursor.pos.x == x && m_cursor.pos.y == y)
 				{
-					m_tileList[id + offset].entity->draw(t);
+					m_cursor.sprite.setPosition(m_tileList[id].sprite.getPosition());
+					t.draw(m_cursor.sprite);
 				}
-				
+				if (m_tileList[id].entity != nullptr)
+				{
+					m_tileList[id].entity->draw(t);
+				}
+				if (m_tileList[idOtherSide].entity != nullptr)
+				{
+					m_tileList[idOtherSide].entity->drawGohst(t);
+				}
 			}
 		}
 
@@ -141,17 +166,147 @@ void Map::draw(sf::RenderTarget & t, Side s)
 void Map::addCharacter(Character* character,  Position p)
 {
 	m_fighters.push_back(std::tuple<Position, std::shared_ptr<Character>>{ p, std::shared_ptr<Character>(character) });
-	tile(p).entity = std::shared_ptr<Character>(character);
+	Map::Tile * tilebla = &tile(p);
+	tilebla->entity = std::shared_ptr<Character>(character);
 
-	int id = (m_ySize - p.y - 1) * m_xSize + p.x;
+	tilebla->entity->setPosition(tilebla->sprite.getPosition());
 
-	int offset = ((p.side == MEDIEVAL) ? 1 : 0) * (m_xSize*m_ySize);
+	m_tileToPlay = tilebla;
+}
 
-	m_tileList[id + offset].entity->setPosition(m_tileList[id + offset].sprite.getPosition());
+int Map::dist(Position p, Position q)
+{
+	return fabs(p.x - q.x) + fabs(p.y - q.y);
+}
+
+bool Map::makeMove()
+{
+	if (m_cursor.pos.side != m_tileToPlay->pos.side) {
+#ifdef _DEBUG
+		std::cout << "tu ne peux pas passer de l'autre côté" << std::endl;
+#endif // DEBUG
+		return false;
+	}
+	if (m_cursor.pos.x == m_tileToPlay->pos.x && m_cursor.pos.y == m_tileToPlay->pos.y){
+#ifdef _DEBUG
+		std::cout << "ce n'est pas un déplacement ça ..." << std::endl;
+#endif // DEBUG
+		return false;
+	}
+
+
+	Position p = m_cursor.pos;
+
+	int id = tileID(p);
+
+	if (m_tileList[id].entity) {
+#ifdef _DEBUG
+		std::cout << "quelqu'un a déja pris la place" << std::endl;
+#endif // DEBUG
+		return false;
+	}
+
+	m_tileToPlay->entity->setPosition(m_tileList[id].sprite.getPosition());
+
+	m_tileList[id].entity.swap(m_tileToPlay->entity);
+
+	m_tileToPlay = &m_tileList[id];
+
+	return true;
+}
+
+bool Map::makeHit()
+{
+	int id = tileID(m_cursor.pos);
+
+	if (!m_tileList[id].entity) {
+#ifdef _DEBUG
+		std::cout << "personne ici" << std::endl;
+#endif // DEBUG
+		return false;
+	}
+	if (m_tileList[id].entity->getTeam() == m_tileToPlay->entity->getTeam()) {
+#ifdef _DEBUG
+		std::cout << "same team" << std::endl;
+#endif // DEBUG
+		return false;
+	}
+	if (m_tileList[id].entity->isDead()) {
+#ifdef _DEBUG
+		std::cout << "ne frappe pas les cadavres stp" << std::endl;
+#endif // DEBUG
+		return false;
+	}
+	if (dist(m_tileList[id].pos, m_tileToPlay->pos) > m_tileToPlay->entity->getSkill(0)->getRange()) {
+#ifdef _DEBUG
+		std::cout << "trop loin :)" << std::endl;
+#endif // DEBUG
+		return false;
+	}
+
+	m_tileToPlay->entity->hit(0, m_tileList[id].entity.get() );
+
+	return true;
+}
+
+void Map::moveCursor(Direction d)
+{
+	switch (d)
+	{
+	case UP:
+		m_cursor.pos.x += 1;
+		break;
+	case DOWN:
+		m_cursor.pos.x -= 1;
+		break;
+	case LEFT:
+		m_cursor.pos.y -= 1;
+		break;
+	case RIGHT:
+		m_cursor.pos.y += 1;
+		break;
+	}
+	m_cursor.pos.x = ( m_cursor.pos.x + m_xSize) % m_xSize;
+	m_cursor.pos.y = ( m_cursor.pos.y + m_ySize) % m_ySize;
+}
+
+void Map::makeChangeSide()
+{
+	Position p = m_tileToPlay->pos;
+	Position nextp = { p.x, p.y, (p.side == TECH ? MEDIEVAL : TECH) };
+
+	int id = tileID(p);
+	int nextid = tileID(nextp);
+
+	m_tileToPlay->entity->setPosition(m_tileList[nextid].sprite.getPosition());
+
+	m_tileList[nextid].entity.swap(m_tileToPlay->entity);
+
+	m_tileToPlay = &m_tileList[nextid];
+}
+
+void Map::changeViewSide()
+{
+
+	m_viewSide = (m_viewSide == TECH ? MEDIEVAL : TECH); 
+	m_cursor.pos.side = m_viewSide;
+}
+
+void Map::nextPlayer(Character *c)
+{
+	for (auto & t : m_tileList)
+	{
+		if (&*t.entity == c)	// si ça référence le même character
+		{
+			m_tileToPlay = &t;
+			m_cursor.pos = { t.pos.x, t.pos.y, t.pos.side };
+			break;
+		}
+	}
 }
 
 
-Map::Tile::Tile(Position & p) :
+Map::Tile::Tile(Position p) :
 	pos(p)
 {
 }

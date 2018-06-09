@@ -116,5 +116,14 @@
     <Image Include="..\Assets\sprites\blueSprite.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\Assets\sprites\cursor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Assets\sprites\blueSpriteShadow.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Assets\sprites\redSpriteShadow.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

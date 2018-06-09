@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include <pugixml.hpp>
 #include "GameEngine.h"
-#include <time.h>
 #include <windows.h>
 
 
@@ -24,9 +23,20 @@ int GameEngine::run()
 	
 	map.addCharacter(&c, pos);
 
+	Position pos2{ 3, 9, TECH };
+
+	pugi::xml_node node2 = doc.child("lol").child("Character2");
+
+	Character c2(node2);
+	c2.setTeam(Character::BLUE);
+	c2.setTexture();
+
+	map.addCharacter(&c2, pos2);
+
+	bool isC2 = true;
+
 	while (window.isOpen())
 	{
-
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -37,39 +47,39 @@ int GameEngine::run()
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Up:
-					c.move(UP);
+					map.moveCursor(UP);
 					break;
 				case sf::Keyboard::Down:
-					c.move(DOWN);
+					map.moveCursor(DOWN);
 					break;
 				case sf::Keyboard::Left:
-					c.move(LEFT);
+					map.moveCursor(LEFT);
 					break;
 				case sf::Keyboard::Right:
-					c.move(RIGHT);
+					map.moveCursor(RIGHT);
 					break;
-				case sf::Keyboard::Z:
-					c.HitAnimation(UP);
+				case sf::Keyboard::Space:
+					if (! map.makeHit())
+						map.makeMove();
 					break;
-				case sf::Keyboard::S:
-					c.HitAnimation(DOWN);
+				case sf::Keyboard::Return:
+					map.changeViewSide();
 					break;
-				case sf::Keyboard::Q:
-					c.HitAnimation(LEFT);
-					break;
-				case sf::Keyboard::D:
-					c.HitAnimation(RIGHT);
+				case sf::Keyboard::RShift:
+					map.makeChangeSide();
 					break;
 				case sf::Keyboard::Escape:
-					c.die();
+					if (isC2) { map.nextPlayer(&c); isC2 = false; }
+					else { map.nextPlayer(&c2); isC2 = true; }
+				default:
 					break;
 				}
 			}
 		}
 
 		window.clear(sf::Color::Black);
-		map.draw(window, TECH);
-		std:Sleep(180);
+		map.draw(window);
+		Sleep(180);
 		window.display();
 	}
 	return EXIT_SUCCESS;

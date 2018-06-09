@@ -194,7 +194,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Assets\sprites\blueSprite.png" />
+    <Image Include="..\Assets\sprites\blueSpriteShadow.png" />
+    <Image Include="..\Assets\sprites\cursor.png" />
     <Image Include="..\Assets\sprites\redSprite.png" />
+    <Image Include="..\Assets\sprites\redSpriteShadow.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tmxlite\tmxlite.vcxproj">

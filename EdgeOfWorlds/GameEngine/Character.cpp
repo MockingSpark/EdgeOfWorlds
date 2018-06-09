@@ -60,6 +60,10 @@ Character::Character(pugi::xml_node& node, int const level) :
 
 void Character::getHit(int const attPower)
 {
+	if (m_dead)
+	{
+		return;
+	}
 
 	m_actualHP -= attPower;
 	if (m_actualHP > m_baseStats.HP)
@@ -176,6 +180,12 @@ void Character::addEquipement(pugi::xml_node & node)
 void Character::addStatut(Statut s)
 {
 	m_activeStatuts.push_back(s);
+}
+
+void Character::onDeath()
+{
+	m_dead = true;
+	die();
 }
 
 void Character::onTurnEnd()
@@ -349,20 +359,47 @@ Stats const& Character::getStats() const
 	  t.draw(m_sprite);
   }
 
+  void Character::drawGohst(sf::RenderTarget & t)
+  {
+	  update();
+	  t.draw(m_spriteGohst);
+  }
+
   void Character::setPosition(sf::Vector2f v)
   {
 	  m_sprite.setPosition(v.x, v.y /*- ( m_sprite.getScale().y /3)*/);
+	  m_spriteGohst.setPosition(v.x, v.y /*- ( m_sprite.getScale().y /3)*/);
   }
+
 
   void Character::setTexture()
   {
-	  m_texture.loadFromFile("../Assets/sprites/redSprite.png");
+	  if (m_team == BLUE)
+	  {
+		  m_texture.loadFromFile("../Assets/sprites/blueSprite.png");
+	  }
+	  else if (m_team == RED)
+	  {
+		  m_texture.loadFromFile("../Assets/sprites/redSprite.png");
+	  }
 	  m_spriteWidth = m_texture.getSize().x / 12;
 	  m_spriteHeight = m_texture.getSize().y / 8;
 	  m_sprite.setTexture(m_texture);
 	  sf::IntRect bonds(0, 0, m_spriteWidth, m_spriteHeight);
 	  m_sprite.setTextureRect(bonds);
-	  m_sprite.setOrigin(0, m_spriteHeight * 2 / 3);
+	  m_sprite.setOrigin(0, m_spriteHeight / 3);
+
+	  if (m_team == BLUE)
+	  {
+		  m_textureGohst.loadFromFile("../Assets/sprites/blueSpriteShadow.png");
+	  }
+	  else if (m_team == RED)
+	  {
+		  m_textureGohst.loadFromFile("../Assets/sprites/redSpriteShadow.png");
+	  }
+	  m_spriteGohst.setTexture(m_textureGohst);
+	  m_spriteGohst.setTextureRect(bonds);
+	  m_spriteGohst.setOrigin(0, m_spriteHeight / 3);
   }
 
   void Character::update()
@@ -450,6 +487,7 @@ Stats const& Character::getStats() const
 		  m_spriteWidth,
 		  m_spriteHeight);
 	  m_sprite.setTextureRect(bonds);
+	  m_spriteGohst.setTextureRect(bonds);
 	  // post - frapper
 
 

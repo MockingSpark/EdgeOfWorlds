@@ -12,18 +12,17 @@
 
 #define NB_SKILLS 4
 
-enum Direction
-{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-};
 
 
 class Character
 {
 public:
+
+	enum Team {
+		RED,
+		BLUE
+	};
+
 	Character() = delete;
 
 	Character( pugi::xml_node& );
@@ -36,8 +35,9 @@ public:
 	void updateStats();
 	void addEquipement(pugi::xml_node&);
 	void addStatut(Statut);
+	void setTeam(Team t) { m_team = t; };
 
-	void onDeath() {};
+	void onDeath();
 	void onHit() {};
 	void onTurnEnd();
 
@@ -49,6 +49,8 @@ public:
 	int const & getHP() const;
 	std::vector<Statut> const & getActiveStatuts() const;
 	int const getIncreaseness(Element) const;
+	Team const & getTeam() const { return m_team; };
+	bool isDead() const { return m_dead; };
 
 protected:
 	std::string m_name;
@@ -61,6 +63,9 @@ protected:
 	Stats m_baseStats;
 	Weakness m_weaknesses[NB_ELEMENTS];
 	Weakness m_baseWeaknesses[NB_ELEMENTS];
+
+	Team m_team = RED;
+	bool m_dead = false;
 
 
 
@@ -84,11 +89,14 @@ private:
 private:
 	sf::Sprite m_sprite;
 	sf::Texture m_texture;
+	sf::Sprite m_spriteGohst;
+	sf::Texture m_textureGohst;
 	int m_animationLine = 8; int m_animationIterator = 0;
 	int m_spriteWidth, m_spriteHeight;
 
 public:
 	void draw(sf::RenderTarget & t);
+	void drawGohst(sf::RenderTarget & t);
 
 	void setPosition(sf::Vector2f v);
 

@@ -16,7 +16,7 @@ protected:
 
 	struct Tile {
 
-		Tile(Position&);
+		Tile(Position);
 
 		Position pos;
 
@@ -27,22 +27,39 @@ protected:
 public:
 	Map(std::string);
 
-	void draw(sf::RenderTarget & t, Side);
+	void draw(sf::RenderTarget &);
 
 	void addCharacter(Character* character, Position p);
 
-	Tile& tile(Position p) { return m_tileList[(m_ySize - p.y - 1) * m_xSize + p.x]; };
+	int dist(Position, Position);
+
+	Tile& tile(Position p) { return m_tileList[tileID(p)]; };
+
+	bool makeMove();
+
+	bool makeHit();
+
+	void moveCursor(Direction);
+
+	void makeChangeSide();
+
+	void changeViewSide() ;
+
+	void nextPlayer(Character*);
 
 protected:
 
 	
-
+	int tileID(Position p) { return (p.y ) * m_xSize + p.x  + ((p.side == MEDIEVAL) ? 1 : 0) * (m_xSize*m_ySize); };
 
 
 	std::vector<Tile> m_tileList;
 
 	Tile * m_tileToPlay;
-	Tile * m_cursor;
+
+	// curseur
+	Tile m_cursor;
+	sf::Texture textCur;
 
 	std::vector<std::tuple<Position, std::shared_ptr<Character>>> m_fighters;
 
@@ -57,6 +74,6 @@ protected:
 
 	TileSet m_tileset;
 
-	// TODO
+	Side m_viewSide = TECH;
 };
 

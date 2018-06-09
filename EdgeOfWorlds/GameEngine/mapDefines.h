@@ -10,3 +10,11 @@ struct Position {
 	int y;
 	Side side;
 };
+
+enum Direction
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
