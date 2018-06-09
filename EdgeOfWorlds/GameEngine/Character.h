@@ -8,8 +8,17 @@
 #include "Equipement.h"
 #include "Statut.h"
 #include "Elements.h"
+#include <SFML/Graphics.hpp>
 
 #define NB_SKILLS 4
+
+enum Direction
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
 
 
 class Character
@@ -71,4 +80,25 @@ private:
 	void quick(int);
 	void freeze(int);
 
+	// Graphic Management :
+private:
+	sf::Sprite m_sprite;
+	sf::Texture m_texture;
+	int m_animationLine = 8; int m_animationIterator = 0;
+	int m_spriteWidth, m_spriteHeight;
+
+public:
+	void draw(sf::RenderTarget & t);
+
+	void setPosition(sf::Vector2f v);
+
+	void setTexture();
+
+	void update();
+
+	void move(Direction);
+
+	void HitAnimation(Direction);
+
+	void die();
 };

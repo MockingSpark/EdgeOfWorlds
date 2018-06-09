@@ -192,6 +192,15 @@
     <None Include="..\Assets\maps\tileset.tsx" />
     <None Include="..\Assets\testMap.tmx" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\sprites\blueSprite.png" />
+    <Image Include="..\Assets\sprites\redSprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tmxlite\tmxlite.vcxproj">
+      <Project>{0bc0c535-febb-4a83-8197-af74fa26e100}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

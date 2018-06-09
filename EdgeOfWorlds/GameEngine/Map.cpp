@@ -84,9 +84,9 @@ Map::Map(std::string s)
 
 	for (int side = 0; side < 2; side++)
 	{
-		for (int x = 0; x < mapSize.x; x++)
+		for (unsigned int x = 0; x < mapSize.x; x++)
 		{
-			for (int y = 0; y < mapSize.y; y++)
+			for (unsigned int y = 0; y < mapSize.y; y++)
 			{
 				int id = (m_xSize -x -1) * mapSize.y + y;
 
@@ -127,15 +127,27 @@ void Map::draw(sf::RenderTarget & t, Side s)
 				int offset = ((s == MEDIEVAL) ? 1 : 0) * (m_xSize*m_ySize);
 
 				t.draw(m_tileList[id + offset ].sprite);
+
+				if (m_tileList[id + offset].entity != nullptr)
+				{
+					m_tileList[id + offset].entity->draw(t);
+				}
 				
 			}
 		}
 
 }
 
-bool Map::addCharacter(std::weak_ptr<Character> character, Position p)
+void Map::addCharacter(Character* character,  Position p)
 {
-	return m_fighters.emplace(p, std::shared_ptr<Character>(character)).second;
+	m_fighters.push_back(std::tuple<Position, std::shared_ptr<Character>>{ p, std::shared_ptr<Character>(character) });
+	tile(p).entity = std::shared_ptr<Character>(character);
+
+	int id = (m_ySize - p.y - 1) * m_xSize + p.x;
+
+	int offset = ((p.side == MEDIEVAL) ? 1 : 0) * (m_xSize*m_ySize);
+
+	m_tileList[id + offset].entity->setPosition(m_tileList[id + offset].sprite.getPosition());
 }
 
 

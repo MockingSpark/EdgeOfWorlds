@@ -342,3 +342,161 @@ Stats const& Character::getStats() const
   {
 	  m_stats.speed = 0;
   }
+
+  void Character::draw(sf::RenderTarget & t)
+  {
+	  update();
+	  t.draw(m_sprite);
+  }
+
+  void Character::setPosition(sf::Vector2f v)
+  {
+	  m_sprite.setPosition(v.x, v.y /*- ( m_sprite.getScale().y /3)*/);
+  }
+
+  void Character::setTexture()
+  {
+	  m_texture.loadFromFile("../Assets/sprites/redSprite.png");
+	  m_spriteWidth = m_texture.getSize().x / 12;
+	  m_spriteHeight = m_texture.getSize().y / 8;
+	  m_sprite.setTexture(m_texture);
+	  sf::IntRect bonds(0, 0, m_spriteWidth, m_spriteHeight);
+	  m_sprite.setTextureRect(bonds);
+	  m_sprite.setOrigin(0, m_spriteHeight * 2 / 3);
+  }
+
+  void Character::update()
+  {
+	  // if dead
+	  if (m_animationLine >= 12 && m_animationIterator == 5)
+	  {
+		  return;
+	  }
+	  //  marche
+	  else if (m_animationLine == 0)
+	  {
+		  setPosition(sf::Vector2f{
+			  m_sprite.getPosition().x - m_sprite.getTextureRect().width /10,  // 5 car 6 animations, 2 car ...
+			  m_sprite.getPosition().y + m_sprite.getTextureRect().height /30  // 5 car 6 animations, 3 car sprite, 2 car ...
+			  });
+		  m_animationIterator = (m_animationIterator + 1) % 6;
+		  if (m_animationIterator == 0)
+		  {
+			  setPosition(sf::Vector2f{
+				  m_sprite.getPosition().x - 4,
+				  m_sprite.getPosition().y + 2 
+				  });
+			  m_animationLine = 8;
+		  }
+	  }
+	  else if (m_animationLine == 1)
+	  {
+		  setPosition(sf::Vector2f{
+			  m_sprite.getPosition().x + m_sprite.getTextureRect().width / 10,
+			  m_sprite.getPosition().y + m_sprite.getTextureRect().height / 30
+			  });
+		  m_animationIterator = (m_animationIterator + 1) % 6;
+		  if (m_animationIterator == 0)
+		  {
+			  setPosition(sf::Vector2f{
+				  m_sprite.getPosition().x + 4,
+				  m_sprite.getPosition().y + 2
+				  });
+			  m_animationLine = 9;
+		  }
+	  }
+	  else if (m_animationLine == 2)
+	  {
+		  setPosition(sf::Vector2f{
+			  m_sprite.getPosition().x + m_sprite.getTextureRect().width / 10,
+			  m_sprite.getPosition().y - m_sprite.getTextureRect().height / 30
+			  });
+		  m_animationIterator = (m_animationIterator + 1) % 6;
+		  if (m_animationIterator == 0)
+		  {
+			  setPosition(sf::Vector2f{
+				  m_sprite.getPosition().x + 4,
+				  m_sprite.getPosition().y - 2
+				  });
+			  m_animationLine = 10;
+		  }
+	  }
+	  else if (m_animationLine == 3)
+	  {
+		  setPosition(sf::Vector2f{
+			  m_sprite.getPosition().x - m_sprite.getTextureRect().width / 10,
+			  m_sprite.getPosition().y - m_sprite.getTextureRect().height / 30
+			  });
+		  m_animationIterator = (m_animationIterator + 1) % 6;
+		  if (m_animationIterator == 0)
+		  {
+			  setPosition(sf::Vector2f{
+				  m_sprite.getPosition().x - 4,
+				  m_sprite.getPosition().y - 2
+				  });
+			  m_animationLine = 11;
+		  }
+	  }
+	  else
+	  {
+		  m_animationIterator = (m_animationIterator + 1) % 6;
+
+	  }
+	  if (m_animationLine >= 4 && m_animationIterator == 0)
+		  m_animationLine = m_animationLine % 4 + 8;
+	  // animations statiques
+	  sf::IntRect bonds((m_animationIterator + (m_animationLine / 8) * 6)* m_spriteWidth,
+		  (m_animationLine % 8) * m_spriteHeight,
+		  m_spriteWidth,
+		  m_spriteHeight);
+	  m_sprite.setTextureRect(bonds);
+	  // post - frapper
+
+
+  }
+
+  void Character::move(Direction d)
+  {
+	  m_animationIterator = 1;
+	  switch (d)
+	  {
+	  case UP:
+		  m_animationLine = 2;
+		  break;
+	  case DOWN:
+		  m_animationLine = 0;
+		  break;
+	  case LEFT:
+		  m_animationLine = 3;
+		  break;
+	  case RIGHT:
+		  m_animationLine = 1;
+		  break;
+	  }
+  }
+
+  void Character::HitAnimation(Direction d)
+  {
+	  m_animationIterator = 1;
+	  switch (d)
+	  {
+	  case UP:
+		  m_animationLine = 6;
+		  break;
+	  case DOWN:
+		  m_animationLine = 4;
+		  break;
+	  case LEFT:
+		  m_animationLine = 7;
+		  break;
+	  case RIGHT:
+		  m_animationLine = 5;
+		  break;
+	  }
+  }
+
+  void Character::die()
+  {
+	  m_animationIterator = 1;
+	  m_animationLine += 4;
+  }

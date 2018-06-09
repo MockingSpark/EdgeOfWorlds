@@ -29,7 +29,7 @@ public:
 
 	void draw(sf::RenderTarget & t, Side);
 
-	bool addCharacter(std::weak_ptr<Character> character, Position p);
+	void addCharacter(Character* character, Position p);
 
 	Tile& tile(Position p) { return m_tileList[(m_ySize - p.y - 1) * m_xSize + p.x]; };
 
@@ -44,7 +44,7 @@ protected:
 	Tile * m_tileToPlay;
 	Tile * m_cursor;
 
-	std::map<Position, std::shared_ptr<Character>> m_fighters;
+	std::vector<std::tuple<Position, std::shared_ptr<Character>>> m_fighters;
 
 	int m_xSize, m_ySize;
 

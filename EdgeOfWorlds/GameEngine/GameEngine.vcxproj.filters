@@ -109,4 +109,12 @@
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\sprites\redSprite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Assets\sprites\blueSprite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
