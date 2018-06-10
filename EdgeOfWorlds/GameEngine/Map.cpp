@@ -167,7 +167,7 @@ void Map::addCharacter(Character* character,  Position p)
 {
 	m_fighters.push_back(std::tuple<Position, std::shared_ptr<Character>>{ p, std::shared_ptr<Character>(character) });
 	Map::Tile * tilebla = &tile(p);
-	tilebla->entity = std::shared_ptr<Character>(character);
+	tilebla->entity.reset(character);
 
 	tilebla->entity->setPosition(tilebla->sprite.getPosition());
 

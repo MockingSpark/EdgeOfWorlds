@@ -8,6 +8,8 @@
 #include "skillDefine.h"
 #include "Elements.h"
 #include "GameState.h"
+#include "IdCard.h"
+#include "Helper.h"
 
 class GameEngine final
 {
@@ -26,6 +28,8 @@ public:
 
 	void gameOver() { initialise(); };
 
+	void updateHelper(bool move = true, bool change = true, bool attack = true) { m_helper.update(move, change, attack); };
+
 private:
 
 	bool isOver();
@@ -33,6 +37,8 @@ private:
 private:
 
 	Map m_map;
+	sf::RenderTexture m_mapTexture;
+	sf::Sprite m_mapSprite;
 	sf::RenderWindow m_window;
 
 	GameState* m_state; //< Predicate : is ptr on static object so it is OK
@@ -47,6 +53,12 @@ private:
 	int m_redKing = 0;
 
 	Character::Team m_currentTeam;
+
+	//cards
+	IdCard m_card;
+
+
+	Helper m_helper;
 
 
 };

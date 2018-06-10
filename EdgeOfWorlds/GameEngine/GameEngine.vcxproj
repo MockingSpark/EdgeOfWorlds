@@ -167,6 +167,7 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Elements.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="IdCard.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="skillDefine.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Equipement.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="IdCard.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PersoDefines.cpp" />
@@ -231,6 +233,9 @@
     <ProjectReference Include="..\tmxlite\tmxlite.vcxproj">
       <Project>{0bc0c535-febb-4a83-8197-af74fa26e100}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\Assets\alagard.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

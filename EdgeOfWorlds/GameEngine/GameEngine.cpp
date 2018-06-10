@@ -7,11 +7,14 @@
 #include "DoneNothingKingState.h"
 
 
+
 GameEngine::GameEngine() :
 	m_map("..\\Assets\\maps\\exampleMap.tmx"),
 	m_state(&state_doneNothing),
-	m_window(sf::VideoMode(1920, 1080), "SFML window")
+	m_window(sf::VideoMode(1800, 920), "SFML window")
 {
+	m_mapTexture.create(1800, 900);
+
 	initialise();
 }
 
@@ -42,14 +45,20 @@ void GameEngine::initialise()
 
 	m_map.nextPlayer(&m_redPlayers[0]);
 
+	m_card.initialise(&m_bluePlayers[0]);
+
+	m_helper.initialise(&m_redPlayers[0]);
+	m_helper.setPosition(sf::Vector2f(200., 700.));
+
 	endOfTurn();
+
 }
 
 int GameEngine::run()
 {
 	
+	m_card.setPosition(sf::Vector2f( 60., 60.));
 
-	bool isC2 = true;
 
 	while (m_window.isOpen())
 	{
@@ -61,9 +70,22 @@ int GameEngine::run()
 			}
 		}
 
+
+		m_mapTexture.clear();
+		m_map.draw(m_mapTexture);
+		m_mapTexture.display();
+
 		m_window.clear(sf::Color::Black);
-		m_map.draw(m_window);
+		m_mapSprite.setTexture(m_mapTexture.getTexture());
+		m_window.draw(m_mapSprite);
+
+		m_card.update();
+		m_card.draw(m_window);
+
+		m_helper.draw(m_window);
+
 		Sleep(180);
+
 		m_window.display();
 	}
 	return EXIT_SUCCESS;
@@ -88,9 +110,11 @@ void GameEngine::endOfTurn()
 			m_currentTeam = Character::BLUE;
 			m_map.nextPlayer(&m_bluePlayers[m_blueIterator]);
 			if (m_blueIterator == m_blueKing) {
+				updateHelper(true, false, true);
 				changeState(&state_doneNothingKing);
 			}
 			else {
+				updateHelper();
 				changeState(&state_doneNothing);
 			}
 			break;
@@ -103,8 +127,10 @@ void GameEngine::endOfTurn()
 			m_map.nextPlayer(&m_redPlayers[m_redIterator]);
 			if (m_redIterator == m_redKing) {
 				changeState(&state_doneNothingKing);
+				updateHelper(true, false);
 			}
 			else {
+				updateHelper();
 				changeState(&state_doneNothing);
 			}
 			break;

@@ -30,37 +30,59 @@ bool DoneNothingKingState::handleInput(GameEngine& e, sf::Event& event)
 			break;
 		case sf::Keyboard::A:
 			e.changeState(&state_endOfTurn);
+			e.updateHelper(false, false, false);
 			break;
 		case sf::Keyboard::Space:
 			if (map.makeMove())
+			{
 				e.changeState(&state_doneMovingKing);
+				e.updateHelper(false, false, true);
+			}
 			break;
 		case sf::Keyboard::LShift:
 			map.changeViewSide();
 			break;
 		case sf::Keyboard::Numpad0:
 			if (map.makeHit(0))
+			{
 				e.changeState(&state_doneFightingKing);
+				e.updateHelper(true, false, false);
+			}
 			break;
 		case sf::Keyboard::Numpad5:
 			if (map.makeHit(5))
+			{
 				e.changeState(&state_doneFightingKing);
+				e.updateHelper(true, false, false);
+			}
 			break;
 		case sf::Keyboard::Numpad1:
 			if (map.makeHit(1))
+			{
 				e.changeState(&state_doneFightingKing);
+				e.updateHelper(true, false, false);
+			}
 			break;
 		case sf::Keyboard::Numpad2:
 			if (map.makeHit(2))
+			{
 				e.changeState(&state_doneFightingKing);
+				e.updateHelper(true, false, false);
+			}
 			break;
 		case sf::Keyboard::Numpad3:
 			if (map.makeHit(3))
+			{
 				e.changeState(&state_doneFightingKing);
+				e.updateHelper(true, false, false);
+			}
 			break;
 		case sf::Keyboard::Numpad4:
 			if (map.makeHit(4))
+			{
 				e.changeState(&state_doneFightingKing);
+				e.updateHelper(true, false, false);
+			}
 			break;
 		default:
 			break;

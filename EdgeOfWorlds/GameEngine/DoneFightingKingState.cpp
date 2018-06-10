@@ -17,6 +17,7 @@ bool DoneFightingKingState::handleInput(GameEngine& e, sf::Event& event)
 		{
 		case sf::Keyboard::A:
 			e.changeState(&state_endOfTurn);
+			e.updateHelper(false, false, false);
 			break;
 		case sf::Keyboard::Z:
 			map.moveCursor(UP);
@@ -31,8 +32,10 @@ bool DoneFightingKingState::handleInput(GameEngine& e, sf::Event& event)
 			map.moveCursor(RIGHT);
 			break;
 		case sf::Keyboard::Space:
-			if (map.makeMove())
+			if (map.makeMove()) {
+				e.updateHelper(false, false, false);
 				e.changeState(&state_endOfTurn);
+			}
 			break;
 		case sf::Keyboard::LShift:
 			map.changeViewSide();
@@ -41,6 +44,7 @@ bool DoneFightingKingState::handleInput(GameEngine& e, sf::Event& event)
 			break;
 		}
 	}
+
 
 	return false;
 }

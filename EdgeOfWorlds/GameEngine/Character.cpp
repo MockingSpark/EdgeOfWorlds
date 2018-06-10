@@ -226,7 +226,7 @@ Stats const& Character::getStats() const
 	  // les skills 1 & 2 sont définis par l'arme si elle existe
 	  if (i < 2)
 	  {
-		  if (m_equipements[Equipement::WEAPON].operator bool())
+		  if (m_equipements[Equipement::WEAPON] != nullptr)
 		  {
 			  if (i == 0)
 				  return m_equipements[Equipement::WEAPON]->useAttack();
@@ -367,8 +367,8 @@ Stats const& Character::getStats() const
 
   void Character::setPosition(sf::Vector2f v)
   {
-	  m_sprite.setPosition(v.x, v.y /*- ( m_sprite.getScale().y /3)*/);
-	  m_spriteGohst.setPosition(v.x, v.y /*- ( m_sprite.getScale().y /3)*/);
+	  m_sprite.setPosition(v.x, v.y);
+	  m_spriteGohst.setPosition(v.x, v.y);
   }
 
 

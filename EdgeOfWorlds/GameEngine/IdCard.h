@@ -5,25 +5,29 @@
 class IdCard
 {
 public:
-	IdCard(Character*);
 
 	void update();
 	void draw(sf::RenderTarget&);
-
-private:
-	void initialise();
+	void initialise(Character*);
+	void setPosition(sf::Vector2f v) ;
+	void setRight();
+	void setLeft();
 
 protected :
-	Character const * m_character;  //< Ptr d'observation uniquement
+	Character * m_character;  //< Ptr d'observation uniquement
 
 	// Corps :
-	sf::Sprite m_card;
-	sf::RenderTexture m_texture;
 	std::map<std::string, sf::Text> m_texts;
+	std::map<Element, sf::CircleShape> m_weaknesses;
+	sf::RenderTexture m_card;
 	sf::RectangleShape m_background;
-	sf::Color m_fillColor;
 	sf::Texture m_miniatureTexture;
 	sf::Texture m_miniatureTextureDead;
 	sf::Sprite m_miniature;
+	sf::Font m_font;
+
+	bool m_left = false;
+
+	sf::Vector2f m_position;
 };
 

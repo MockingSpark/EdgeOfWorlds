@@ -49,6 +49,7 @@ public:
 	int const & getHP() const;
 	std::vector<Statut> const & getActiveStatuts() const;
 	int const getIncreaseness(Element) const;
+	int const getWeakness(Element e) const { return m_weaknesses[e]; };
 	Team const & getTeam() const { return m_team; };
 	bool isDead() const { return m_dead; };
 
