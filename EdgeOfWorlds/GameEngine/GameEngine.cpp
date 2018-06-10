@@ -3,14 +3,20 @@
 #include "GameEngine.h"
 #include <windows.h>
 
+#include "DoneNothingState.h"
+#include "DoneNothingKingState.h"
 
-int GameEngine::run()
+
+GameEngine::GameEngine() :
+	m_map("..\\Assets\\maps\\exampleMap.tmx"),
+	m_state(&state_doneNothing),
+	m_window(sf::VideoMode(1920, 1080), "SFML window")
 {
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML window");
+	initialise();
+}
 
-	Map map("..\\Assets\\maps\\exampleMap.tmx");
-
-
+void GameEngine::initialise()
+{
 	pugi::xml_document doc;
 	pugi::xml_parse_result result1 = doc.load_file("../GameEngine/Player.xml");
 
@@ -18,69 +24,112 @@ int GameEngine::run()
 
 	pugi::xml_node node = doc.child("lol").child("Character");
 
-	Character c(node);
-	c.setTexture();
-	
-	map.addCharacter(&c, pos);
+	m_redPlayers.push_back(Character(node));
+	m_redPlayers[0].setTexture();
+
+	m_map.addCharacter(&m_redPlayers[0], pos);
 
 	Position pos2{ 3, 9, TECH };
 
 	pugi::xml_node node2 = doc.child("lol").child("Character2");
 
-	Character c2(node2);
-	c2.setTeam(Character::BLUE);
-	c2.setTexture();
+	m_bluePlayers.push_back(Character(node2));
 
-	map.addCharacter(&c2, pos2);
+	m_bluePlayers[0].setTeam(Character::BLUE);
+	m_bluePlayers[0].setTexture();
+
+	m_map.addCharacter(&m_bluePlayers[0], pos2);
+
+	m_map.nextPlayer(&m_redPlayers[0]);
+
+	endOfTurn();
+}
+
+int GameEngine::run()
+{
+	
 
 	bool isC2 = true;
 
-	while (window.isOpen())
+	while (m_window.isOpen())
 	{
 		sf::Event event;
-		while (window.pollEvent(event))
+		while (m_window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-			if (event.type == sf::Event::KeyPressed)
-			{
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Up:
-					map.moveCursor(UP);
-					break;
-				case sf::Keyboard::Down:
-					map.moveCursor(DOWN);
-					break;
-				case sf::Keyboard::Left:
-					map.moveCursor(LEFT);
-					break;
-				case sf::Keyboard::Right:
-					map.moveCursor(RIGHT);
-					break;
-				case sf::Keyboard::Space:
-					if (! map.makeHit())
-						map.makeMove();
-					break;
-				case sf::Keyboard::Return:
-					map.changeViewSide();
-					break;
-				case sf::Keyboard::RShift:
-					map.makeChangeSide();
-					break;
-				case sf::Keyboard::Escape:
-					if (isC2) { map.nextPlayer(&c); isC2 = false; }
-					else { map.nextPlayer(&c2); isC2 = true; }
-				default:
-					break;
-				}
+			if (m_state->handleInput(*this, event ) ) {
+				m_window.close();
 			}
 		}
 
-		window.clear(sf::Color::Black);
-		map.draw(window);
+		m_window.clear(sf::Color::Black);
+		m_map.draw(m_window);
 		Sleep(180);
-		window.display();
+		m_window.display();
 	}
 	return EXIT_SUCCESS;
+}
+
+void GameEngine::changeState(GameState *state)
+{
+	m_state = state;
+}
+
+void GameEngine::endOfTurn()
+{
+	if (!isOver())
+	{
+		switch (m_currentTeam)
+		{
+		case Character::RED:
+			do {
+				m_blueIterator++;
+				m_blueIterator %= m_bluePlayers.size();
+			} while (m_bluePlayers[m_blueIterator].isDead());
+			m_currentTeam = Character::BLUE;
+			m_map.nextPlayer(&m_bluePlayers[m_blueIterator]);
+			if (m_blueIterator == m_blueKing) {
+				changeState(&state_doneNothingKing);
+			}
+			else {
+				changeState(&state_doneNothing);
+			}
+			break;
+		case Character::BLUE:
+			do {
+				m_redIterator++;
+				m_redIterator %= m_redPlayers.size();
+			} while (m_redPlayers[m_redIterator].isDead());
+			m_currentTeam = Character::RED;
+			m_map.nextPlayer(&m_redPlayers[m_redIterator]);
+			if (m_redIterator == m_redKing) {
+				changeState(&state_doneNothingKing);
+			}
+			else {
+				changeState(&state_doneNothing);
+			}
+			break;
+		}
+	}
+	else {
+		gameOver();
+	}
+	
+}
+
+
+bool GameEngine::isOver()
+{
+	bool noMoreBlue = true;
+	bool noMoreRed = true;
+	for (auto & ch : m_redPlayers)
+	{
+		if (!ch.isDead())
+			noMoreRed = false;
+	}
+	for (auto & ch : m_bluePlayers)
+	{
+		if (!ch.isDead())
+			noMoreBlue = false;
+	}
+	return noMoreBlue || noMoreRed;
 }

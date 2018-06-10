@@ -49,12 +49,12 @@ Map::Map(std::string s) :
            
 
 	std::string texturePath = m_tileset.tmx.getImagePath();
-
+/*
 #ifndef _DEBUG
 	m_tileset.texture.loadFromFile(texturePath);
 #else
 	assert(m_tileset.texture.loadFromFile(texturePath));
-#endif // _DEBUG
+#endif // _DEBUG*/
 	std::unique_ptr<sf::Texture> newTexture = std::unique_ptr<sf::Texture>(new sf::Texture());
 	sf::Image img;
 
@@ -215,7 +215,7 @@ bool Map::makeMove()
 	return true;
 }
 
-bool Map::makeHit()
+bool Map::makeHit(int skill)
 {
 	int id = tileID(m_cursor.pos);
 
@@ -240,6 +240,12 @@ bool Map::makeHit()
 	if (dist(m_tileList[id].pos, m_tileToPlay->pos) > m_tileToPlay->entity->getSkill(0)->getRange()) {
 #ifdef _DEBUG
 		std::cout << "trop loin :)" << std::endl;
+#endif // DEBUG
+		return false;
+	}
+	if( skill >= 6 || m_tileToPlay->entity->getSkill(skill) == nullptr) {
+#ifdef _DEBUG
+		std::cout << "Pas de skill ici" << std::endl;
 #endif // DEBUG
 		return false;
 	}
@@ -270,7 +276,7 @@ void Map::moveCursor(Direction d)
 	m_cursor.pos.y = ( m_cursor.pos.y + m_ySize) % m_ySize;
 }
 
-void Map::makeChangeSide()
+bool Map::makeChangeSide()
 {
 	Position p = m_tileToPlay->pos;
 	Position nextp = { p.x, p.y, (p.side == TECH ? MEDIEVAL : TECH) };
@@ -278,11 +284,21 @@ void Map::makeChangeSide()
 	int id = tileID(p);
 	int nextid = tileID(nextp);
 
+	if (m_tileList[nextid].entity)
+	{
+#ifdef _DEBUG
+		std::cout << "Il y a déjà quelqu'un ici sur l'autre plan (on s'y perd avec ces indications de lieu)" << std::endl;
+#endif // _DEBUG
+		return false;
+	}
+
 	m_tileToPlay->entity->setPosition(m_tileList[nextid].sprite.getPosition());
 
 	m_tileList[nextid].entity.swap(m_tileToPlay->entity);
 
 	m_tileToPlay = &m_tileList[nextid];
+
+	return true;
 }
 
 void Map::changeViewSide()
@@ -305,6 +321,10 @@ void Map::nextPlayer(Character *c)
 	}
 }
 
+void Map::makeChangeDirection(Direction d)
+{
+	m_tileToPlay->entity->changeDirection(d);
+}
 
 Map::Tile::Tile(Position p) :
 	pos(p)

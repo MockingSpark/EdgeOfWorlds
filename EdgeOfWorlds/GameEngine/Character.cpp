@@ -538,3 +538,22 @@ Stats const& Character::getStats() const
 	  m_animationIterator = 1;
 	  m_animationLine += 4;
   }
+
+  void Character::changeDirection(Direction d)
+  {
+	  switch (d)
+	  {
+	  case UP:
+		  m_animationLine = 10;
+		  break;
+	  case DOWN:
+		  m_animationLine = 8;
+		  break;
+	  case LEFT:
+		  m_animationLine = 11;
+		  break;
+	  case RIGHT:
+		  m_animationLine = 9;
+		  break;
+	  }
+  }

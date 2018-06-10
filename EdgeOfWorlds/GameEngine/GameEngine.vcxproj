@@ -91,6 +91,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\Programmation\JIN\EdgeOfWorlds\EdgeOfWorlds\tmxlite\include</AdditionalIncludeDirectories>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -99,6 +100,9 @@
     <Lib>
       <AdditionalLibraryDirectories>D:\Programmation\JIN\EdgeOfWorlds\EdgeOfWorlds\tmxlite\bin\DebugStatic\libtmxlite-s-d.lib</AdditionalLibraryDirectories>
     </Lib>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -151,9 +155,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DoneFightingKingState.h" />
+    <ClInclude Include="DoneFightingState.h" />
+    <ClInclude Include="DoneMovingKingState.h" />
+    <ClInclude Include="DoneMovingState.h" />
+    <ClInclude Include="DoneNothingKingState.h" />
+    <ClInclude Include="DoneNothingState.h" />
+    <ClInclude Include="DoneSwitchingState.h" />
+    <ClInclude Include="EndOfTurnState.h" />
     <ClInclude Include="Equipement.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Elements.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="IdCard.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="skillDefine.h" />
     <ClInclude Include="Manual.h" />
@@ -167,9 +181,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="DoneFightingKingState.cpp" />
+    <ClCompile Include="DoneFightingState.cpp" />
+    <ClCompile Include="DoneMovingKingState.cpp" />
+    <ClCompile Include="DoneMovingState.cpp" />
+    <ClCompile Include="DoneNothingKingState.cpp" />
+    <ClCompile Include="DoneNothingState.cpp" />
+    <ClCompile Include="DoneSwitching.cpp" />
     <ClCompile Include="Elements.cpp" />
+    <ClCompile Include="EndOfTurnState.cpp" />
     <ClCompile Include="Equipement.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="IdCard.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PersoDefines.cpp" />
     <ClCompile Include="Skill.cpp" />
@@ -193,9 +217,13 @@
     <None Include="..\Assets\testMap.tmx" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Assets\sprites\blueFace.png" />
+    <Image Include="..\Assets\sprites\blueFaceDead.png" />
     <Image Include="..\Assets\sprites\blueSprite.png" />
     <Image Include="..\Assets\sprites\blueSpriteShadow.png" />
     <Image Include="..\Assets\sprites\cursor.png" />
+    <Image Include="..\Assets\sprites\redFace.png" />
+    <Image Include="..\Assets\sprites\redFaceDead.png" />
     <Image Include="..\Assets\sprites\redSprite.png" />
     <Image Include="..\Assets\sprites\redSpriteShadow.png" />
   </ItemGroup>

@@ -109,4 +109,6 @@ public:
 	void HitAnimation(Direction);
 
 	void die();
+
+	void changeDirection(Direction);
 };

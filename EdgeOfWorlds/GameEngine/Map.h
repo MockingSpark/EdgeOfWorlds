@@ -37,15 +37,17 @@ public:
 
 	bool makeMove();
 
-	bool makeHit();
+	bool makeHit(int);
 
 	void moveCursor(Direction);
 
-	void makeChangeSide();
+	bool makeChangeSide();
 
 	void changeViewSide() ;
 
 	void nextPlayer(Character*);
+
+	void makeChangeDirection(Direction);
 
 protected:
 
