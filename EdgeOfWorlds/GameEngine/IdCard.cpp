@@ -2,6 +2,26 @@
 #include "IdCard.h"
 #include <assert.h>
 
+IdCard::IdCard()
+{
+
+	m_character = nullptr;  //< Ptr d'observation uniquement
+
+	/*						  // Corps :
+	std::map<std::string, sf::Text> m_texts;
+	std::map<Element, sf::CircleShape> m_weaknesses;
+	sf::RenderTexture m_card;
+	sf::RectangleShape m_background;
+	sf::Texture m_miniatureTexture;
+	sf::Texture m_miniatureTextureDead;
+	sf::Sprite m_miniature;
+	sf::Font m_font;
+
+	bool m_left = false;
+
+	sf::Vector2f m_position;*/
+}
+
 void IdCard::update()
 {
 	std::string nameStr("HP : ");

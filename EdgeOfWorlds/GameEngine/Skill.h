@@ -23,6 +23,8 @@ protected:
 
 public:
 	Skill(pugi::xml_node);
+	~Skill() {
+	};
 
 	void updateCharges() { m_charges -= m_cost; };
 	void refill() { m_charges = m_maxCharges; };

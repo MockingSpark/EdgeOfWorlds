@@ -48,7 +48,7 @@ void Helper::draw(sf::RenderTarget &t)
 	t.draw(sprite);
 }
 
-void Helper::initialise(Character *c)
+void Helper::initialise(Character const *c)
 {
 	m_character = c;
 
@@ -85,7 +85,6 @@ void Helper::initialise(Character *c)
 	m_skipText.setPosition(20., 154.);
 	m_skipText.setString("A : Skip turn");
 
-	sf::Text m_moveText;
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -93,18 +92,41 @@ void Helper::initialise(Character *c)
 		m_skillsTexts[i].setFillColor(color);
 		m_skillsTexts[i].setCharacterSize(30);
 		m_skillsTexts[i].setFont(m_font);
-		m_skillsTexts[i].setPosition(450 * (1 + i/3) + 20, 60 * (i % 3) + 20);
+		m_skillsTexts[i].setPosition(450 * (1 + i/3) + 20.f, 60 * (i % 3) + 20.f);
+		std::string Str;
+		if (m_character->getSkill(i) == nullptr)
+		{
+			Str = std::to_string(i) + ": ";
+		}
+		else {
+			Str = std::to_string(i) + ": " + m_character->getSkill(i)->getName() +
+				" [" + std::to_string(m_character->getSkill(i)->getRange()) + "]" +
+				" (" + std::to_string(m_character->getSkill(i)->getRadius()) + ")" +
+				" ." + std::to_string(m_character->getSkill(i)->getCharges()) + ".";
+		}
+		m_skillsTexts[i].setString(Str);
+
+	}
+
+}
+
+void Helper::changeCharacter(Character const *c)
+{
+	m_character = c;
+	for (int i = 0; i < 6; i++)
+	{
 		std::string Str;
 		if (m_character->getSkill(i) == nullptr)
 		{
 			Str = std::to_string(i) + " : ";
 		}
 		else {
-			Str = std::to_string(i) + " : " + m_character->getSkill(i)->getName() ;
+			Str = std::to_string(i) + ": " + m_character->getSkill(i)->getName() +
+				" [" + std::to_string(m_character->getSkill(i)->getRange()) + "]" +
+				" (" + std::to_string(m_character->getSkill(i)->getRadius()) + ")" +
+				" ." + std::to_string(m_character->getSkill(i)->getCharges()) + ".";
 		}
 		m_skillsTexts[i].setString(Str);
 
 	}
-
-	sf::RenderTexture m_texture;
 }

@@ -35,10 +35,10 @@ Equipement::Equipement(pugi::xml_node& node) :
 	m_bonus(node.child("Bonus")),
 	m_weaknesses{ W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE },
 	m_increases{ 100, 100, 100, 100, 100, 100, 100, 100 },
-	m_description(node.child("Descriptor").text().as_string())
+	m_description(node.child("Descriptor").text().as_string()),
+	m_attack(node.child("Attack")),
+	m_skill(node.child("Skill"))
 {
-	m_attack = std::make_unique<Skill>(node.child("Attack"));
-    m_skill = std::make_unique<Skill>(node.child("Skill"));
 	m_type = equipTypeFromString(node.attribute("equipType").as_string());
 	for (auto & a : node.child("Weakness").attributes())
 	{
@@ -50,15 +50,15 @@ Equipement::Equipement(pugi::xml_node& node) :
 	}
 }
 
-Skill const * Equipement::useAttack()
+Skill const & Equipement::useAttack()
 {
 
-	return m_attack.get();
+	return m_attack;
 }
 
-Skill const * Equipement::useSkill()
+Skill const & Equipement::useSkill()
 {
-	return m_skill.get(); 
+	return m_skill; 
 }
 
 Stats const & Equipement::getBonuses() const

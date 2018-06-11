@@ -212,6 +212,9 @@
     <Xml Include="Skills.xml" />
     <Xml Include="Characters.xml" />
     <Xml Include="Equipement.xml" />
+    <Xml Include="Level.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Assets\maps\exampleMap.tmx" />

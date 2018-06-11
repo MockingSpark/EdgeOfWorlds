@@ -2,7 +2,7 @@
 #include "Statut.h"
 
 
-Statut::Statut(StatutEnum s, int c, int pow) :
+Statut::Statut(StatutEnum const s, int const c, int const pow) :
 	m_compteur(c),
 	m_needDelete(false),
 	m_power(pow),

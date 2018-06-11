@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Level>
+  <RED>
+    <Character name="Bob" level="1" x="2" y="4" s="medieval">
+      <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
+      <Skills>
+        <Skill name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+        <Skill name="FireBall">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="3" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Skills>
+      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+        <Descriptor>
+          A very used gauntlet. Wow, it looks sooo old ...
+        </Descriptor>
+        <Bonus HP="0" strength="0" defense="0" power="0" resistence="0" speed="0"/>
+        <Attack name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Attack>
+        <Skill name="Upercut">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="110" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Equipement>
+    </Character>
+    <Character name="Bob" level="1" x="2" y="6" s="tech">
+      <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
+      <Skills>
+        <Skill name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+        <Skill name="FireBall">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="3" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Skills>
+      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+        <Descriptor>
+          A very used gauntlet. Wow, it looks sooo old ...
+        </Descriptor>
+        <Bonus HP="0" strength="0" defense="0" power="0" resistence="0" speed="0"/>
+        <Attack name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Attack>
+        <Skill name="Upercut">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="110" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Equipement>
+    </Character>
+    <King name="Sothan" level="1" x="2" y="8" s="tech">
+      <Stats HP="3" strength="10" defense="7" power="10" resistence="10" speed="10"/>
+      <Skills>
+        <Skill name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+        <Skill name="FireBall">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="3" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Skills>
+      <Equipement name="Infinity Gauntlet" munitions="1" equipType="weapon">
+        <Descriptor>
+          A cute gauntlet with five gemstones on it. It's use is easy as a snap.
+        </Descriptor>
+        <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
+        <Weakness fire="weak"/>
+        <Attack name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Attack>
+        <Skill name="Half">
+          <Target range="0" radius="1" accuracy="50" side="both" team="any" reachable="others"/>
+          <Usage charges="1" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="150" isMagical="true" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="100">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Equipement>
+    </King>
+  </RED>
+  <BLUE>
+    <Character name="Bob" level="1"  x="8" y="4" s="tech">
+      <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
+      <Skills>
+        <Skill name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+        <Skill name="FireBall">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="3" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Skills>
+      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+        <Descriptor>
+          A very used gauntlet. Wow, it looks sooo old ...
+        </Descriptor>
+        <Bonus HP="0" strength="0" defense="0" power="0" resistence="0" speed="0"/>
+        <Attack name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Attack>
+        <Skill name="Upercut">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="110" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Equipement>
+    </Character>
+    <Character name="Bob" level="1"  x="8" y="6" s="medieval">
+      <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
+      <Skills>
+        <Skill name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+        <Skill name="FireBall">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="3" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Skills>
+      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+        <Descriptor>
+          A very used gauntlet. Wow, it looks sooo old ...
+        </Descriptor>
+        <Bonus HP="0" strength="0" defense="0" power="0" resistence="0" speed="0"/>
+        <Attack name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Attack>
+        <Skill name="Upercut">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="110" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Equipement>
+    </Character>
+    <King name="Sothan" level="1"  x="8" y="8" s="medieval">
+      <Stats HP="22" strength="10" defense="7" power="10" resistence="10" speed="10"/>
+      <Skills>
+        <Skill name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+        <Skill name="FireBall">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="3" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
+            <Statut effect="poison" power="10" duration="3"/>
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Skills>
+      <Equipement name="Infinity Gauntlet" munitions="1" equipType="weapon">
+        <Descriptor>
+          A cute gauntlet with five gemstones on it. It's use is easy as a snap.
+        </Descriptor>
+        <Bonus HP="0" strength="14" defense="3" power="10" resistence="3" speed="0"/>
+        <Weakness fire="weak"/>
+        <Attack name="Hit">
+          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Usage charges="1" cost="0"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="0">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Attack>
+        <Skill name="Half">
+          <Target range="0" radius="1" accuracy="50" side="both" team="any" reachable="others"/>
+          <Usage charges="1" cost="1"/>
+          <Effect repel="0" pureDamage="0" heal="false"  modifier="150" isMagical="true" >
+            <!--element="none"-->
+            <!-- <Statut effect="poison" power="10" duration="3"/> -->
+          </Effect>
+          <Recoil power="100">
+            <!-- % -->
+            <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
+          </Recoil>
+        </Skill>
+      </Equipement>
+    </King>
+  </BLUE>
+</Level>

@@ -17,9 +17,10 @@ public:
 	static std::string stringFromEquipType(EquipType);
 
 	Equipement(pugi::xml_node&);
+	~Equipement() {};
 
-	Skill const * useAttack();
-	Skill const * useSkill();
+	Skill const & useAttack();
+	Skill const & useSkill();
 
 	Stats const & getBonuses() const;
 	std::string const & getName() const;
@@ -32,8 +33,8 @@ public:
 private:
 	std::string m_name;
 	Stats m_bonus;
-	std::unique_ptr<Skill> m_attack;
-	std::unique_ptr<Skill> m_skill;
+	Skill m_attack;
+	Skill m_skill;
 	int m_munitions;
 	EquipType m_type;
 	std::string m_description;

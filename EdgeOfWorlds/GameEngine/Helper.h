@@ -7,11 +7,12 @@ class Helper
 public:
 	void update(bool move = true, bool change = true, bool attack = true);
 	void draw(sf::RenderTarget&);
-	void initialise(Character*);
+	void initialise(Character const *);
+	void changeCharacter(Character const *);
 	void setPosition(sf::Vector2f v) { m_position = v; };
 
 protected:
-	Character * m_character; //< pointeur d'observation uniquement.
+	Character const * m_character; //< pointeur d'observation uniquement.
 
 	sf::RenderTexture m_texture;
 	sf::RectangleShape m_background;

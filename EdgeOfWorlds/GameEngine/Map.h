@@ -20,7 +20,7 @@ protected:
 
 		Position pos;
 
-		std::shared_ptr<Character> entity;
+		Character* entity;
 		sf::Sprite sprite;
 	};
 
@@ -29,7 +29,7 @@ public:
 
 	void draw(sf::RenderTarget &);
 
-	void addCharacter(Character* character, Position p);
+	void addCharacter(Character * character, Position p);
 
 	int dist(Position, Position);
 
@@ -45,9 +45,11 @@ public:
 
 	void changeViewSide() ;
 
-	void nextPlayer(Character*);
+	void nextPlayer(Character const *);
 
 	void makeChangeDirection(Direction);
+
+	void resetMap();
 
 protected:
 
@@ -63,7 +65,7 @@ protected:
 	Tile m_cursor;
 	sf::Texture textCur;
 
-	std::vector<std::tuple<Position, std::shared_ptr<Character>>> m_fighters;
+	std::vector<std::tuple<Position, Character*>> m_fighters;
 
 	int m_xSize, m_ySize;
 

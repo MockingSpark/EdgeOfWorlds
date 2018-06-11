@@ -6,7 +6,7 @@
   * 
   */
 
-Character::Character(pugi::xml_node& node) :
+Character::Character(pugi::xml_node node) :
 	m_name(node.attribute("name").as_string()),
 	m_level(node.attribute("level").as_int()),
 	m_stats{node.child("Stats")},
@@ -15,9 +15,12 @@ Character::Character(pugi::xml_node& node) :
 	m_weaknesses{ W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE },
 	m_baseWeaknesses{ W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE, W_NONE }
 {
+	
+	m_activeStatuts.clear();
 	for (auto & a : node.child("Weaknesses").attributes())
 	{
 		m_weaknesses[elementFromString(a.name())] = weaknessFromString(a.as_string());
+		m_baseWeaknesses[elementFromString(a.name())] = weaknessFromString(a.as_string());
 	}
 	int i(0);
 	for (auto & n : node.child("Skills").children())
@@ -25,38 +28,13 @@ Character::Character(pugi::xml_node& node) :
 		m_skills[i] = std::make_unique<Skill>(n);
 		i++;
 	}
-	pugi::xml_node n = node.child("Equipement");
-	addEquipement(n);
+	for (auto &n : node.children("Equipement")) {
+		addEquipement(n);
+	}
 
 	updateStats();
 
 }
-
-/*
-Character::Character(pugi::xml_node& node, int const level) :
-	m_name(node.attribute("name").as_string()),
-	m_level(level),
-	m_stats{ node.child("BaseStats") },
-	m_baseStats{ node.child("BaseStats") }
-{
-
-	/*
-	 * TODO : - define stats by level
-	 *        - add random skills by level + xml
-	 *		  - add random equipement
-	 *
-
-
-
-	m_skills[0] = std::make_unique<Skill>(node.child("Skills"));
-	int i(0);
-	for (auto n : node.child("Skills").children())
-	{
-		m_skills[i] = std::make_unique<Skill>(n);
-		i++;
-	}
-
-}*/
 
 void Character::getHit(int const attPower)
 {
@@ -102,10 +80,10 @@ void Character::hit(int const& skillID, Character * target)
 			target->m_stats.defense /
 			100;	// les 100 du modifier en pourcentage
 	}
-
+	
 	for (auto & s : m_skills[skillID]->getStatuts())
 	{
-		target->m_activeStatuts.emplace_back(s);
+		target->m_activeStatuts.push_back(std::make_unique<Statut>(s.getEffect(), s.getPower(), s.getCompteur()));
 	}
 	int weaknessModifier = (getModifierFromWeakness(target->m_weaknesses[m_skills[skillID]->getElement()]));
 	int increaseModifier = target->getIncreaseness(m_skills[skillID]->getElement());
@@ -130,9 +108,9 @@ void Character::updateStats()
 	m_stats = m_baseStats;
 	for (auto & i : m_activeStatuts)
 	{
-		if (!(i.getEffect() == SOFTHEAL || i.getEffect() == POISON))
+		if (!(i->getEffect() == SOFTHEAL || i->getEffect() == POISON))
 		{
-			applyUniqueStatut(i.getEffect());
+			applyUniqueStatut(i->getEffect());
 		}
 	}
 	for (auto & i : m_equipements)
@@ -179,7 +157,7 @@ void Character::addEquipement(pugi::xml_node & node)
 
 void Character::addStatut(Statut s)
 {
-	m_activeStatuts.push_back(s);
+	m_activeStatuts.push_back(std::make_unique<Statut>(s.getEffect(), s.getCompteur(), s.getPower()));
 }
 
 void Character::onDeath()
@@ -193,12 +171,12 @@ void Character::onTurnEnd()
 	int j = 0;
 	for (auto & i : m_activeStatuts)
 	{
-		if (i.getEffect() == SOFTHEAL || i.getEffect() == POISON)
+		if (i->getEffect() == SOFTHEAL || i->getEffect() == POISON)
 		{
 			applyUniqueStatut(j);
 		}
-		i.update();
-		if (i.isExpired())
+		i->update();
+		if (i->isExpired())
 		{
 			m_activeStatuts.erase(m_activeStatuts.begin()+j);
 		}
@@ -221,7 +199,7 @@ Stats const& Character::getStats() const
 	  return m_name;
   }
 
-  Skill const * Character::getSkill(int i) const // précond. 0 <= i < 6
+  Skill const* Character::getSkill(int i) const // précond. 0 <= i < 6
   {
 	  // les skills 1 & 2 sont définis par l'arme si elle existe
 	  if (i < 2)
@@ -229,26 +207,26 @@ Stats const& Character::getStats() const
 		  if (m_equipements[Equipement::WEAPON] != nullptr)
 		  {
 			  if (i == 0)
-				  return m_equipements[Equipement::WEAPON]->useAttack();
+				  return &m_equipements[Equipement::WEAPON]->useAttack();
 			  else
-				  return m_equipements[Equipement::WEAPON]->useSkill();
+				  return& m_equipements[Equipement::WEAPON]->useSkill();
 		  }
 	  }
 	 
 	  return m_skills[i].get();
   }
 
-  Equipement const * Character::getEquipement(Equipement::EquipType t) const
+  Equipement const & Character::getEquipement(Equipement::EquipType t) const
   {
-	  return m_equipements[t].get();
+	  return *m_equipements[t];
   }
 
   int const & Character::getHP() const
   {
 	  return m_actualHP;
   }
-
-  std::vector<Statut> const & Character::getActiveStatuts() const
+  
+  std::vector<std::unique_ptr<Statut>> const & Character::getActiveStatuts() const
   {
 	  return m_activeStatuts;
   }
@@ -262,11 +240,11 @@ Stats const& Character::getStats() const
 	  }
 	  return coef;
   }
-
+  
   void Character::applyUniqueStatut(int i)
   {
-	  int pow = m_activeStatuts[i].getPower();
-	  switch (m_activeStatuts[i].getEffect()) {
+	  int pow = m_activeStatuts[i]->getPower();
+	  switch (m_activeStatuts[i]->getEffect()) {
 	  case POISON:
 		  poison(pow);
 		  break;
@@ -302,7 +280,6 @@ Stats const& Character::getStats() const
 		  break;
 	  }
   }
-
   void Character::poison(int p)
   {
 	  m_actualHP -= p * m_stats.HP / 100;
@@ -387,7 +364,7 @@ Stats const& Character::getStats() const
 	  m_sprite.setTexture(m_texture);
 	  sf::IntRect bonds(0, 0, m_spriteWidth, m_spriteHeight);
 	  m_sprite.setTextureRect(bonds);
-	  m_sprite.setOrigin(0, m_spriteHeight / 3);
+	  m_sprite.setOrigin(0., m_spriteHeight / 3.f);
 
 	  if (m_team == BLUE)
 	  {
@@ -399,7 +376,7 @@ Stats const& Character::getStats() const
 	  }
 	  m_spriteGohst.setTexture(m_textureGohst);
 	  m_spriteGohst.setTextureRect(bonds);
-	  m_spriteGohst.setOrigin(0, m_spriteHeight / 3);
+	  m_spriteGohst.setOrigin(0., m_spriteHeight / 3.f);
   }
 
   void Character::update()

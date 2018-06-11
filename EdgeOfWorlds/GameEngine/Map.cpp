@@ -87,9 +87,9 @@ Map::Map(std::string s) :
 
 	for (int side = 0; side < 2; side++)
 	{
-		for (unsigned int y = 0; y < mapSize.y; y++)
+		for ( int y = 0; y < mapSize.y; y++)
 		{
-			for (unsigned int x = 0; x < mapSize.x; x++)
+			for ( int x = 0; x < mapSize.x; x++)
 			{
 				Position p = { x, y, (side == 0 ? TECH : MEDIEVAL) };
 				Tile tmpTile(p);
@@ -109,8 +109,8 @@ Map::Map(std::string s) :
 
 				//tile.sprite.setOrigin(tileSize.x / 2, tileSize.y / 2);
 
-				tmpTile.sprite.setPosition((x + y)*m_tileset.tmx.getTileSize().x /2,
-										(y - x + m_xSize - 1)*m_tileset.tmx.getTileSize().y /4); // isometric
+				tmpTile.sprite.setPosition((x + y)*m_tileset.tmx.getTileSize().x /2.f,
+										(y - x + m_xSize - 1)*m_tileset.tmx.getTileSize().y /4.f); // isometric
 
 				m_tileList.push_back(tmpTile);
 			}
@@ -163,11 +163,11 @@ void Map::draw(sf::RenderTarget & t)
 
 }
 
-void Map::addCharacter(Character* character,  Position p)
+void Map::addCharacter(Character * character,  Position p)
 {
-	m_fighters.push_back(std::tuple<Position, std::shared_ptr<Character>>{ p, std::shared_ptr<Character>(character) });
+	m_fighters.push_back(std::tuple<Position, Character*>{ p, character });
 	Map::Tile * tilebla = &tile(p);
-	tilebla->entity.reset(character);
+	tilebla->entity = character;
 
 	tilebla->entity->setPosition(tilebla->sprite.getPosition());
 
@@ -176,7 +176,7 @@ void Map::addCharacter(Character* character,  Position p)
 
 int Map::dist(Position p, Position q)
 {
-	return fabs(p.x - q.x) + fabs(p.y - q.y);
+	return abs(p.x - q.x) + abs(p.y - q.y);
 }
 
 bool Map::makeMove()
@@ -187,9 +187,15 @@ bool Map::makeMove()
 #endif // DEBUG
 		return false;
 	}
-	if (m_cursor.pos.x == m_tileToPlay->pos.x && m_cursor.pos.y == m_tileToPlay->pos.y){
+	if (dist(m_cursor.pos, m_tileToPlay->pos) == 0){
 #ifdef _DEBUG
 		std::cout << "ce n'est pas un déplacement ça ..." << std::endl;
+#endif // DEBUG
+		return false;
+	}
+	if (dist(m_cursor.pos, m_tileToPlay->pos) > m_tileToPlay->entity->getStats().speed) {
+#ifdef _DEBUG
+		std::cout << "c'est trop loin pour toi, petit pas !" << std::endl;
 #endif // DEBUG
 		return false;
 	}
@@ -208,7 +214,8 @@ bool Map::makeMove()
 
 	m_tileToPlay->entity->setPosition(m_tileList[id].sprite.getPosition());
 
-	m_tileList[id].entity.swap(m_tileToPlay->entity);
+	m_tileList[id].entity = m_tileToPlay->entity;
+	m_tileToPlay->entity = nullptr;
 
 	m_tileToPlay = &m_tileList[id];
 
@@ -225,9 +232,12 @@ bool Map::makeHit(int skill)
 #endif // DEBUG
 		return false;
 	}
+
+
+
 	if (m_tileList[id].entity->getTeam() == m_tileToPlay->entity->getTeam()) {
 #ifdef _DEBUG
-		std::cout << "same team" << std::endl;
+		std::cout << "wrong team" << std::endl;
 #endif // DEBUG
 		return false;
 	}
@@ -250,7 +260,7 @@ bool Map::makeHit(int skill)
 		return false;
 	}
 
-	m_tileToPlay->entity->hit(0, m_tileList[id].entity.get() );
+	m_tileToPlay->entity->hit(0, m_tileList[id].entity );
 
 	return true;
 }
@@ -294,7 +304,8 @@ bool Map::makeChangeSide()
 
 	m_tileToPlay->entity->setPosition(m_tileList[nextid].sprite.getPosition());
 
-	m_tileList[nextid].entity.swap(m_tileToPlay->entity);
+	m_tileList[nextid].entity = m_tileToPlay->entity;
+	m_tileToPlay->entity = nullptr;
 
 	m_tileToPlay = &m_tileList[nextid];
 
@@ -308,7 +319,7 @@ void Map::changeViewSide()
 	m_cursor.pos.side = m_viewSide;
 }
 
-void Map::nextPlayer(Character *c)
+void Map::nextPlayer(Character const *c)
 {
 	for (auto & t : m_tileList)
 	{
@@ -324,6 +335,14 @@ void Map::nextPlayer(Character *c)
 void Map::makeChangeDirection(Direction d)
 {
 	m_tileToPlay->entity->changeDirection(d);
+}
+
+void Map::resetMap()
+{
+	for (auto & tile : m_tileList)
+	{
+		tile.entity = nullptr;;
+	}
 }
 
 Map::Tile::Tile(Position p) :

@@ -5,6 +5,7 @@
 class IdCard
 {
 public:
+	IdCard();
 
 	void update();
 	void draw(sf::RenderTarget&);

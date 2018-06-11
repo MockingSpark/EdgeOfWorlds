@@ -8,13 +8,14 @@ private:
 	std::string stringFromStatut(StatutEnum t);
 	StatutEnum statutFromString(std::string t);
 public:
-	Statut(StatutEnum s, int c, int pow);
+	Statut(StatutEnum const s, int const c, int const pow);
 	Statut(pugi::xml_node);
 	void update() { if (m_compteur > 0) { m_compteur--; } if (m_compteur == 0) { m_needDelete = true; } };
 	bool const & isExpired() const { return m_needDelete; };
 
 	StatutEnum const & getEffect() const { return m_effect; };
 	int const & getPower() const { return m_power; };
+	int const & getCompteur() const { return m_compteur; };
 	
 private:
 	int m_power;

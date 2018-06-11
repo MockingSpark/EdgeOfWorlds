@@ -43,8 +43,8 @@ private:
 
 	GameState* m_state; //< Predicate : is ptr on static object so it is OK
 
-	std::vector<Character> m_redPlayers;
-	std::vector<Character> m_bluePlayers;
+	std::vector<std::unique_ptr<Character>> m_redPlayers;
+	std::vector<std::unique_ptr<Character>> m_bluePlayers;
 
 	int m_blueIterator = 0;
 	int m_redIterator = 0;
@@ -55,7 +55,7 @@ private:
 	Character::Team m_currentTeam;
 
 	//cards
-	IdCard m_card;
+	std::vector<std::unique_ptr<IdCard>> m_cards;
 
 
 	Helper m_helper;
