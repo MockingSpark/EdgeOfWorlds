@@ -87,9 +87,9 @@ Map::Map(std::string s) :
 
 	for (int side = 0; side < 2; side++)
 	{
-		for ( int y = 0; y < mapSize.y; y++)
+		for ( int y = 0; y < mapSize.y; y++) // mismatch but ...
 		{
-			for ( int x = 0; x < mapSize.x; x++)
+			for ( int x = 0; x < mapSize.x; x++) // mismatch but ...
 			{
 				Position p = { x, y, (side == 0 ? TECH : MEDIEVAL) };
 				Tile tmpTile(p);
@@ -113,6 +113,7 @@ Map::Map(std::string s) :
 										(y - x + m_xSize - 1)*m_tileset.tmx.getTileSize().y /4.f); // isometric
 
 				m_tileList.push_back(tmpTile);
+				m_tileList.back().entity = nullptr;
 			}
 		}
 	}
@@ -150,11 +151,11 @@ void Map::draw(sf::RenderTarget & t)
 					m_cursor.sprite.setPosition(m_tileList[id].sprite.getPosition());
 					t.draw(m_cursor.sprite);
 				}
-				if (m_tileList[id].entity != nullptr)
+				if (m_tileList[id].entity)
 				{
 					m_tileList[id].entity->draw(t);
 				}
-				if (m_tileList[idOtherSide].entity != nullptr)
+				if (m_tileList[idOtherSide].entity)
 				{
 					m_tileList[idOtherSide].entity->drawGohst(t);
 				}
@@ -222,47 +223,105 @@ bool Map::makeMove()
 	return true;
 }
 
+
+bool Map::hitable(Position& target, Position& origin, EdgeSide side)
+{
+	switch (side)
+	{
+	case S_BOTH:
+		return true;
+	case S_EITHER:
+		return true;
+	case S_MEDIEVAL:
+		return target.side == MEDIEVAL;
+	case S_TECH:
+		return target.side == TECH;
+	case S_OTHER:
+		return target.side != origin.side;
+	case S_SAME:
+		return target.side == origin.side;
+	default:
+		return false;
+	}
+};
+
+bool Map::inRange(Position& p1, Position& p2, int rg, SkillRange rangeType)
+{
+	switch (rangeType)
+	{
+	case R_ALL:
+		return true;
+	case R_OTHERS:
+		return p1.x != p2.x && p1.y != p2.y && p1.side != p2.side;
+	case R_TEAM:
+		return true;
+	case R_AREA:
+		return dist(p1, p2) <= rg;
+	default:
+		return false;
+	}
+}
+
+bool Map::isTargetTeam(Character* target, Character* active, TargetTeam targetTeam)
+{
+	switch (targetTeam)
+	{
+	case T_ALLY:
+		return target->getTeam() == active->getTeam();
+	case T_ENEMY:
+		return target->getTeam() != active->getTeam();
+	case T_BOTH:
+		return target != active;
+	case T_SELF:
+		return target == active;
+	default:
+		return false;
+	}
+}
+
 bool Map::makeHit(int skill)
 {
 	int id = tileID(m_cursor.pos);
 
-	if (!m_tileList[id].entity) {
-#ifdef _DEBUG
-		std::cout << "personne ici" << std::endl;
-#endif // DEBUG
-		return false;
+	SkillRange rangeType = m_tileToPlay->entity->getSkill(skill)->getTargeted();
+
+	TargetTeam targetTeam = m_tileToPlay->entity->getSkill(skill)->getTargetTeam();
+
+	EdgeSide targetSide = m_tileToPlay->entity->getSkill(skill)->getTargetSide();
+
+	int rg = m_tileToPlay->entity->getSkill(skill)->getRange();
+
+	int radius = m_tileToPlay->entity->getSkill(skill)->getRadius();
+
+	bool someoneHit = false;
+
+	for (auto & ti : m_tileList)
+	{
+		if (ti.entity &&
+			inRange(ti.pos, m_tileToPlay->pos, rg, rangeType) &&
+			isTargetTeam(ti.entity, m_tileToPlay->entity, targetTeam) &&
+			hitable(ti.pos, m_tileToPlay->pos, targetSide) &&
+			dist(ti.pos, m_tileList[id].pos) <= radius )
+		{
+			someoneHit = true; 
+			m_tileToPlay->entity->hit(skill, ti.entity);
+
+			int x = ti.pos.x - m_tileToPlay->pos.x;
+			int y = ti.pos.y - m_tileToPlay->pos.y;
+			Direction direction;
+			if (x >= 0 && y >= 0 )
+				direction = UP;
+			if (x >= 0 && y < 0)
+				direction = RIGHT;
+			if (x < 0 && y < 0)
+				direction = LEFT;
+			if (x < 0 && y >= 0)
+				direction = DOWN;
+			m_tileToPlay->entity->HitAnimation(direction);
+		}
 	}
 
-
-
-	if (m_tileList[id].entity->getTeam() == m_tileToPlay->entity->getTeam()) {
-#ifdef _DEBUG
-		std::cout << "wrong team" << std::endl;
-#endif // DEBUG
-		return false;
-	}
-	if (m_tileList[id].entity->isDead()) {
-#ifdef _DEBUG
-		std::cout << "ne frappe pas les cadavres stp" << std::endl;
-#endif // DEBUG
-		return false;
-	}
-	if (dist(m_tileList[id].pos, m_tileToPlay->pos) > m_tileToPlay->entity->getSkill(0)->getRange()) {
-#ifdef _DEBUG
-		std::cout << "trop loin :)" << std::endl;
-#endif // DEBUG
-		return false;
-	}
-	if( skill >= 6 || m_tileToPlay->entity->getSkill(skill) == nullptr) {
-#ifdef _DEBUG
-		std::cout << "Pas de skill ici" << std::endl;
-#endif // DEBUG
-		return false;
-	}
-
-	m_tileToPlay->entity->hit(0, m_tileList[id].entity );
-
-	return true;
+	return someoneHit;
 }
 
 void Map::moveCursor(Direction d)

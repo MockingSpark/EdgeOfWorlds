@@ -48,9 +48,9 @@ void Helper::draw(sf::RenderTarget &t)
 	t.draw(sprite);
 }
 
-void Helper::initialise(Character const *c)
+void Helper::initialise()
 {
-	m_character = c;
+	m_character = nullptr;
 
 	sf::Color color(100, 100, 100);
 
@@ -94,16 +94,7 @@ void Helper::initialise(Character const *c)
 		m_skillsTexts[i].setFont(m_font);
 		m_skillsTexts[i].setPosition(450 * (1 + i/3) + 20.f, 60 * (i % 3) + 20.f);
 		std::string Str;
-		if (m_character->getSkill(i) == nullptr)
-		{
-			Str = std::to_string(i) + ": ";
-		}
-		else {
-			Str = std::to_string(i) + ": " + m_character->getSkill(i)->getName() +
-				" [" + std::to_string(m_character->getSkill(i)->getRange()) + "]" +
-				" (" + std::to_string(m_character->getSkill(i)->getRadius()) + ")" +
-				" ." + std::to_string(m_character->getSkill(i)->getCharges()) + ".";
-		}
+		Str = std::to_string(i) + ": ";
 		m_skillsTexts[i].setString(Str);
 
 	}

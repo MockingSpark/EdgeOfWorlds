@@ -48,6 +48,9 @@
     <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
       <Project>{895bf92e-7f44-4b17-b65d-451c07ec8b23}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\tmxlite\tmxlite.vcxproj">
+      <Project>{0bc0c535-febb-4a83-8197-af74fa26e100}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

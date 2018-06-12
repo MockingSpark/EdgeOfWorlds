@@ -1,3 +1,12 @@
+/**
+* //////  Skill.h  //////
+*
+* Ce fichier constient la Skill, permettant de gérer les compétences
+*
+* \author Cossec Estéban
+*
+*/
+
 #pragma once
 
 #include <vector>
@@ -9,11 +18,15 @@
 #include "Elements.h"
 
 
-// TODO accuracy
-
+/**
+  * \class Skill
+  * 
+  * Un skill a un grand nombre d'effets possibles décrits ci-dessous
+  */
 class Skill
 {
 protected:
+	/// fonctions de parsing
 	std::string stringFromSkillRange(SkillRange t);
 	SkillRange skillRangeFromString(std::string t);
 	std::string stringFromTargetTeam(TargetTeam t);
@@ -22,13 +35,15 @@ protected:
 	EdgeSide edgeSideFromString(std::string t);
 
 public:
+	/// constructeur depuis un oeud XML
 	Skill(pugi::xml_node);
-	~Skill() {
-	};
 
+	/// fonction de mise à jour des charges restantes. à appeler lors de l'utilisation
 	void updateCharges() { m_charges -= m_cost; };
+	/// fonctions permettant de recharger la compétences
 	void refill() { m_charges = m_maxCharges; };
 
+	/// accesseurs
 	std::string const & getName() const { return m_name; };
 	int const & getRepel() const { return m_repel; };
 	int const & getModifier() const { return m_modifier; };
@@ -50,26 +65,25 @@ public:
 	EdgeSide const & getTargetSide() const { return m_targetSide; };
 
 protected:
-	std::string m_name;
-	int m_repel;
-	int m_modifier; // %
-	int m_pureDamage;
-	bool m_magical;
-	int m_range;
-	int m_radius;
-	int m_accuracy;
-	int m_cost;
-	bool m_heal;
-	std::vector<Statut> m_statuts;
-	int m_charges;
-	int m_maxCharges;
-	Element m_element;
-	int m_recoil; // %
-	std::vector<Statut> m_recoilStatuts;
-	SkillRange m_targeted;
+	std::string m_name;	///< nom de la compétences
+	int m_repel;	///< effet de repousse NYI
+	int m_modifier; ///< modificateur de dégats en %
+	int m_pureDamage;	///< dégats bruts appliqués En Plus des dégats classique
+	bool m_magical;	///< définit sur quelle statistique agir
+	int m_range;	///< la distance à laquelle l'attaque peut être lancée
+	int m_radius;	///< le rayon d'action de l'attaque par raport à son point d'impact
+	int m_accuracy;	///< précision de l'attaque NYI
+	int m_cost;		///< coût d'utilisation de l'attaque (sur ses charges)
+	bool m_heal;	///< détermine si il s'agit d'un sort de soin
+	std::vector<Statut> m_statuts;	///< les statuts que l'attaque inflige
+	int m_charges;	///< le nomre de charges encore disponibles
+	int m_maxCharges;	///< le nombre de charges maximales
+	Element m_element;	///< L'élément de l'attaque
+	int m_recoil;	///< les dégats de recul en % de vie
+	std::vector<Statut> m_recoilStatuts;	///< les status infligés lors du recul
+	SkillRange m_targeted;	///< Les trois suivants déterminent quelles sont les cibles de l'attaque
 	TargetTeam m_targetTeam;
 	EdgeSide m_targetSide;
-	//pugi::xml_node const spawn;
 
 };
 

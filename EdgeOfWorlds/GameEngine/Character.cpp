@@ -28,6 +28,14 @@ Character::Character(pugi::xml_node node) :
 		m_skills[i] = std::make_unique<Skill>(n);
 		i++;
 	}
+	pugi::xml_node wNode = node.child("Weapon");
+	addEquipement(wNode);
+	pugi::xml_node aNode = node.child("Armor");
+	addEquipement(aNode);
+	pugi::xml_node eNode = node.child("Equipement");
+	addEquipement(eNode);
+
+
 	for (auto &n : node.children("Equipement")) {
 		addEquipement(n);
 	}
@@ -113,11 +121,10 @@ void Character::updateStats()
 			applyUniqueStatut(i->getEffect());
 		}
 	}
-	for (auto & i : m_equipements)
-	{
-		if (i.operator bool())
-			m_stats += i->getBonuses();
-	}
+	if (m_armor)
+		m_stats += m_armor->getBonuses();
+	if (m_weapon)
+		m_stats += m_weapon->getBonuses();
 	m_actualHP = (m_stats.HP < m_actualHP) ? m_stats.HP : m_actualHP;
 
 	
@@ -129,29 +136,51 @@ void Character::updateStats()
 	m_weaknesses[E_THUNDER] = m_baseWeaknesses[E_THUNDER];
 	m_weaknesses[E_WATER] = m_baseWeaknesses[E_WATER];
 	m_weaknesses[E_WIND] = m_baseWeaknesses[E_WIND];
-	for (auto & j : m_equipements)
-	{
-		if (j != nullptr)
-		{
-			m_weaknesses[E_DARK] = combineWeakness(m_weaknesses[E_DARK], j->getWeakness(E_DARK));
-			m_weaknesses[E_EARTH] = combineWeakness(m_weaknesses[E_EARTH], j->getWeakness(E_EARTH));
-			m_weaknesses[E_FIRE] = combineWeakness(m_weaknesses[E_FIRE], j->getWeakness(E_FIRE));
-			m_weaknesses[E_HOLY] = combineWeakness(m_weaknesses[E_HOLY], j->getWeakness(E_HOLY));
-			m_weaknesses[E_NONE] = combineWeakness(m_weaknesses[E_NONE], j->getWeakness(E_NONE));
-			m_weaknesses[E_THUNDER] = combineWeakness(m_weaknesses[E_THUNDER], j->getWeakness(E_THUNDER));
-			m_weaknesses[E_WATER] = combineWeakness(m_weaknesses[E_WATER], j->getWeakness(E_WATER));
-			m_weaknesses[E_WIND] = combineWeakness(m_weaknesses[E_WIND], j->getWeakness(E_WIND));
-
-		}
-	}
 	
+	if (m_armor != nullptr)
+	{
+		m_weaknesses[E_DARK] = combineWeakness(m_weaknesses[E_DARK], m_armor->getWeakness(E_DARK));
+		m_weaknesses[E_EARTH] = combineWeakness(m_weaknesses[E_EARTH], m_armor->getWeakness(E_EARTH));
+		m_weaknesses[E_FIRE] = combineWeakness(m_weaknesses[E_FIRE], m_armor->getWeakness(E_FIRE));
+		m_weaknesses[E_HOLY] = combineWeakness(m_weaknesses[E_HOLY], m_armor->getWeakness(E_HOLY));
+		m_weaknesses[E_NONE] = combineWeakness(m_weaknesses[E_NONE], m_armor->getWeakness(E_NONE));
+		m_weaknesses[E_THUNDER] = combineWeakness(m_weaknesses[E_THUNDER], m_armor->getWeakness(E_THUNDER));
+		m_weaknesses[E_WATER] = combineWeakness(m_weaknesses[E_WATER], m_armor->getWeakness(E_WATER));
+		m_weaknesses[E_WIND] = combineWeakness(m_weaknesses[E_WIND], m_armor->getWeakness(E_WIND));
+
+	}
+	if (m_weapon != nullptr)
+	{
+		m_weaknesses[E_DARK] = combineWeakness(m_weaknesses[E_DARK], m_weapon->getWeakness(E_DARK));
+		m_weaknesses[E_EARTH] = combineWeakness(m_weaknesses[E_EARTH], m_weapon->getWeakness(E_EARTH));
+		m_weaknesses[E_FIRE] = combineWeakness(m_weaknesses[E_FIRE], m_weapon->getWeakness(E_FIRE));
+		m_weaknesses[E_HOLY] = combineWeakness(m_weaknesses[E_HOLY], m_weapon->getWeakness(E_HOLY));
+		m_weaknesses[E_NONE] = combineWeakness(m_weaknesses[E_NONE], m_weapon->getWeakness(E_NONE));
+		m_weaknesses[E_THUNDER] = combineWeakness(m_weaknesses[E_THUNDER], m_weapon->getWeakness(E_THUNDER));
+		m_weaknesses[E_WATER] = combineWeakness(m_weaknesses[E_WATER], m_weapon->getWeakness(E_WATER));
+		m_weaknesses[E_WIND] = combineWeakness(m_weaknesses[E_WIND], m_weapon->getWeakness(E_WIND));
+
+	}
 
 }
 
 void Character::addEquipement(pugi::xml_node & node)
 {
-	Equipement::EquipType type = Equipement::equipTypeFromString(node.attribute("equipType").as_string());
-	m_equipements[type].reset(new Equipement(node));
+	std::string s = node.name();
+
+	if (s == "Weapon")
+	{
+		m_weapon.reset(new Weapon(node));
+	}
+	else if (s == "Armor")
+	{
+		m_armor.reset(new Armor(node));
+	}
+	else
+	{
+		m_miscEquipement.reset(new Equipement(node));
+	}
+	
 	updateStats();
 }
 
@@ -204,21 +233,16 @@ Stats const& Character::getStats() const
 	  // les skills 1 & 2 sont définis par l'arme si elle existe
 	  if (i < 2)
 	  {
-		  if (m_equipements[Equipement::WEAPON] != nullptr)
+		  if (m_weapon)
 		  {
 			  if (i == 0)
-				  return &m_equipements[Equipement::WEAPON]->useAttack();
+				  return &m_weapon->useAttack();
 			  else
-				  return& m_equipements[Equipement::WEAPON]->useSkill();
+				  return& m_weapon->useSkill();
 		  }
 	  }
 	 
 	  return m_skills[i].get();
-  }
-
-  Equipement const & Character::getEquipement(Equipement::EquipType t) const
-  {
-	  return *m_equipements[t];
   }
 
   int const & Character::getHP() const
@@ -234,10 +258,13 @@ Stats const& Character::getStats() const
   int const Character::getIncreaseness(Element el) const
   {
 	  int coef = 1;
-	  for (auto & e : m_equipements) {
-		  if (e)
-			 coef *= e->getIncreaseness(el);
-	  }
+	  if (m_armor)
+		  coef *= m_armor->getIncreaseness(el);
+	  if (m_weapon)
+		  coef *= m_weapon->getIncreaseness(el);
+	  if (m_miscEquipement)
+		  coef *= m_miscEquipement->getIncreaseness(el);
+
 	  return coef;
   }
   
@@ -518,6 +545,9 @@ Stats const& Character::getStats() const
 
   void Character::changeDirection(Direction d)
   {
+	  if (m_dead)
+		  return;
+
 	  switch (d)
 	  {
 	  case UP:

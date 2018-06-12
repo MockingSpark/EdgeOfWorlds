@@ -17,6 +17,7 @@ GameEngine::GameEngine() :
 	m_mapTexture.create(1900, 920);
 	m_helper.setPosition(sf::Vector2f(250., 700.));
 	m_mapSprite.setPosition(sf::Vector2f(310., 0.));
+	m_helper.initialise();
 
 	initialise();
 }
@@ -114,14 +115,14 @@ void GameEngine::initialise()
 
 		m_cards.push_back(std::make_unique<IdCard>());
 		m_cards.back()->initialise(m_redPlayers.back().get());
-		m_cards.back()->setPosition(sf::Vector2f(0.f, 100. + i*(130.f)));
+		m_cards.back()->setPosition(sf::Vector2f(0.f, 100.f + i*(130.f)));
 		m_cards.back()->setRight();
 		i++;
 	}
 
 	m_currentTeam = Character::RED;
 	m_map.nextPlayer(m_redPlayers.front().get());
-	m_helper.initialise(m_redPlayers.front().get());
+	m_helper.changeCharacter((m_redPlayers.front().get()));
 
 	if (0 == m_redKing) {
 		updateHelper(true, false, true);
@@ -133,8 +134,6 @@ void GameEngine::initialise()
 	}
 
 
-
-	endOfTurn();
 
 }
 

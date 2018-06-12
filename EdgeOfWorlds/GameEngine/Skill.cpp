@@ -54,9 +54,7 @@ std::string Skill::stringFromTargetTeam(TargetTeam t)
 		return "enemy";
 	case T_SELF:
 		return "self";
-	case T_STAGE:
-		return "stage";
-	case T_TEAM:
+	case T_ALLY:
 		return "team";
 	default:
 		return "both";
@@ -65,10 +63,6 @@ std::string Skill::stringFromTargetTeam(TargetTeam t)
 
 TargetTeam Skill::targetTeamFromString(std::string t)
 {
-	if (t == "stage")
-	{
-		return T_STAGE;
-	}
 	if (t == "enemy")
 	{
 		return T_ENEMY;
@@ -77,11 +71,11 @@ TargetTeam Skill::targetTeamFromString(std::string t)
 	{
 		return T_SELF;
 	}
-	if (t == "team")
+	if (t == "ally")
 	{
-		return T_TEAM;
+		return T_ALLY;
 	}
-	return T_SELF;
+	return T_BOTH;
 }
 
 std::string Skill::stringFromEdgeSide(EdgeSide t)

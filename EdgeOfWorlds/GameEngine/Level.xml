@@ -28,13 +28,13 @@
           </Recoil>
         </Skill>
       </Skills>
-      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+      <Weapon name="Weak Gauntlet" munitions="1" equipType="weapon">
         <Descriptor>
           A very used gauntlet. Wow, it looks sooo old ...
         </Descriptor>
         <Bonus HP="0" strength="0" defense="0" power="0" resistence="0" speed="0"/>
         <Attack name="Hit">
-          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Target range="1" radius="1" accuracy="100" side="same" team="both" reachable="area"/>
           <Usage charges="1" cost="0"/>
           <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
             <!--element="none"-->
@@ -46,7 +46,7 @@
           </Recoil>
         </Attack>
         <Skill name="Upercut">
-          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Target range="1" radius="1" accuracy="100" side="same" team="both" reachable="area"/>
           <Usage charges="1" cost="0"/>
           <Effect repel="0" pureDamage="0" heal="false"  modifier="110" isMagical="false" >
             <!--element="none"-->
@@ -57,7 +57,7 @@
             <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
           </Recoil>
         </Skill>
-      </Equipement>
+      </Weapon>
     </Character>
     <Character name="Bob" level="1" x="2" y="6" s="tech">
       <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
@@ -86,7 +86,7 @@
           </Recoil>
         </Skill>
       </Skills>
-      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+      <Weapon name="Weak Gauntlet" munitions="1" equipType="weapon">
         <Descriptor>
           A very used gauntlet. Wow, it looks sooo old ...
         </Descriptor>
@@ -115,13 +115,13 @@
             <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
           </Recoil>
         </Skill>
-      </Equipement>
+      </Weapon>
     </Character>
     <King name="Sothan" level="1" x="2" y="8" s="tech">
       <Stats HP="3" strength="10" defense="7" power="10" resistence="10" speed="10"/>
       <Skills>
         <Skill name="Hit">
-          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Target range="1" radius="1" accuracy="100" side="same" team="both" reachable="area"/>
           <Usage charges="1" cost="0"/>
           <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" >
             <!--element="none"-->
@@ -133,7 +133,7 @@
           </Recoil>
         </Skill>
         <Skill name="FireBall">
-          <Target range="1" radius="1" accuracy="100" side="same" team="any" reachable="area"/>
+          <Target range="1" radius="1" accuracy="100" side="same" team="both" reachable="area"/>
           <Usage charges="3" cost="1"/>
           <Effect repel="0" pureDamage="0" heal="false"  modifier="100" isMagical="false" element="fire" >
             <Statut effect="poison" power="10" duration="3"/>
@@ -144,7 +144,7 @@
           </Recoil>
         </Skill>
       </Skills>
-      <Equipement name="Infinity Gauntlet" munitions="1" equipType="weapon">
+      <Weapon name="Infinity Gauntlet" munitions="1" equipType="weapon">
         <Descriptor>
           A cute gauntlet with five gemstones on it. It's use is easy as a snap.
         </Descriptor>
@@ -174,7 +174,7 @@
             <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
           </Recoil>
         </Skill>
-      </Equipement>
+      </Weapon>
     </King>
   </RED>
   <BLUE>
@@ -205,7 +205,7 @@
           </Recoil>
         </Skill>
       </Skills>
-      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+      <Weapon name="Weak Gauntlet" munitions="1" equipType="weapon">
         <Descriptor>
           A very used gauntlet. Wow, it looks sooo old ...
         </Descriptor>
@@ -234,7 +234,7 @@
             <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
           </Recoil>
         </Skill>
-      </Equipement>
+      </Weapon>
     </Character>
     <Character name="Bob" level="1"  x="8" y="6" s="medieval">
       <Stats HP="10" strength="10" defense="10" power="10" resistence="10" speed="10"/>
@@ -263,7 +263,7 @@
           </Recoil>
         </Skill>
       </Skills>
-      <Equipement name="Weak Gauntlet" munitions="1" equipType="weapon">
+      <Weapon name="Weak Gauntlet" munitions="1" equipType="weapon">
         <Descriptor>
           A very used gauntlet. Wow, it looks sooo old ...
         </Descriptor>
@@ -292,7 +292,7 @@
             <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
           </Recoil>
         </Skill>
-      </Equipement>
+      </Weapon>
     </Character>
     <King name="Sothan" level="1"  x="8" y="8" s="medieval">
       <Stats HP="22" strength="10" defense="7" power="10" resistence="10" speed="10"/>
@@ -321,7 +321,7 @@
           </Recoil>
         </Skill>
       </Skills>
-      <Equipement name="Infinity Gauntlet" munitions="1" equipType="weapon">
+      <Weapon name="Infinity Gauntlet" munitions="1" equipType="weapon">
         <Descriptor>
           A cute gauntlet with five gemstones on it. It's use is easy as a snap.
         </Descriptor>
@@ -351,7 +351,7 @@
             <!-- <RecoilStatus effect="poison" power="10" duration="3"/> -->
           </Recoil>
         </Skill>
-      </Equipement>
+      </Weapon>
     </King>
   </BLUE>
 </Level>

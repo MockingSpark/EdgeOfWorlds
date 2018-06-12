@@ -7,7 +7,7 @@ class Helper
 public:
 	void update(bool move = true, bool change = true, bool attack = true);
 	void draw(sf::RenderTarget&);
-	void initialise(Character const *);
+	void initialise();
 	void changeCharacter(Character const *);
 	void setPosition(sf::Vector2f v) { m_position = v; };
 

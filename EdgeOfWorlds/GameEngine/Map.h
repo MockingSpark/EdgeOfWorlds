@@ -1,3 +1,12 @@
+/**
+* //////  Map.h  //////
+*
+* Ce fichier constient la classe Map, gérant la carte et ses interactions avec les Personnages
+*
+* \author Cossec Estéban
+*
+*/
+
 #pragma once
 
 #include <vector>
@@ -6,29 +15,35 @@
 #include <tmxlite/TileLayer.hpp>
 #include <SFML/Graphics.hpp>
 
-#define MOVEMENT_COUNT 3 // TODO ajouter une stat de mvt
 #define ASSETS_PATH "..\\Assets\\maps\\tileset.tsx"
 
-
+/**
+  * \class Map
+  *
+  * Cette classe gère la carte de jeu. Cette carte est une carte isométrique, designé par TiledMaps.
+  */
 class Map
 {
 protected:
 
+	/// Définit une tuile, élément unitaire composant ma carte
 	struct Tile {
-
+		/// constructeur
 		Tile(Position);
-
+		/// position
 		Position pos;
-
+		/// pointeur d'observation sur un potentiel personnage
 		Character* entity;
+		/// sprite nécessaire à l'affichage
 		sf::Sprite sprite;
 	};
 
 public:
+	/// Le constructeur de la Map prend en argument le chemin vers le fichier .tmx
 	Map(std::string);
-
+	/// fonction d'affichage de la carte
 	void draw(sf::RenderTarget &);
-
+	/// 
 	void addCharacter(Character * character, Position p);
 
 	int dist(Position, Position);
@@ -50,6 +65,11 @@ public:
 	void makeChangeDirection(Direction);
 
 	void resetMap();
+
+private:
+	bool hitable(Position& target, Position& origin, EdgeSide side);
+	bool inRange(Position& p1, Position& p2, int rg, SkillRange rangeType);
+	bool isTargetTeam(Character* target, Character* active, TargetTeam targetTeam);
 
 protected:
 
