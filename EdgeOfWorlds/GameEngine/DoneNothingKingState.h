@@ -1,3 +1,11 @@
+/**
+* //////  DoneNothingKingState.h  //////
+*
+* Ce fichier constient la classe d'état Done Nothing King
+*
+* \author Cossec Estéban
+*
+*/
 #pragma once
 #include "GameState.h"
 class DoneNothingKingState :

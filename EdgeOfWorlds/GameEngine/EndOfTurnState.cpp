@@ -15,19 +15,19 @@ bool EndOfTurnState::handleInput(GameEngine & e, sf::Event & event)
 		switch (event.key.code)
 		{
 		case sf::Keyboard::Z:
-			map.makeChangeDirection(UP);
+			map.makeChangeDirection(NORTH);
 			e.endOfTurn();
 			break;
 		case sf::Keyboard::S:
-			map.makeChangeDirection(DOWN);
+			map.makeChangeDirection(SOUTH);
 			e.endOfTurn();
 			break;
 		case sf::Keyboard::Q:
-			map.makeChangeDirection(LEFT);
+			map.makeChangeDirection(WEST);
 			e.endOfTurn();
 			break;
 		case sf::Keyboard::D:
-			map.makeChangeDirection(RIGHT);
+			map.makeChangeDirection(EAST);
 			e.endOfTurn();
 			break;
 		case sf::Keyboard::LShift:

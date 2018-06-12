@@ -502,16 +502,16 @@ Stats const& Character::getStats() const
 	  m_animationIterator = 1;
 	  switch (d)
 	  {
-	  case UP:
+	  case NORTH:
 		  m_animationLine = 2;
 		  break;
-	  case DOWN:
+	  case SOUTH:
 		  m_animationLine = 0;
 		  break;
-	  case LEFT:
+	  case WEST:
 		  m_animationLine = 3;
 		  break;
-	  case RIGHT:
+	  case EAST:
 		  m_animationLine = 1;
 		  break;
 	  }
@@ -522,16 +522,16 @@ Stats const& Character::getStats() const
 	  m_animationIterator = 1;
 	  switch (d)
 	  {
-	  case UP:
+	  case NORTH:
 		  m_animationLine = 6;
 		  break;
-	  case DOWN:
+	  case SOUTH:
 		  m_animationLine = 4;
 		  break;
-	  case LEFT:
+	  case WEST:
 		  m_animationLine = 7;
 		  break;
-	  case RIGHT:
+	  case EAST:
 		  m_animationLine = 5;
 		  break;
 	  }
@@ -550,16 +550,16 @@ Stats const& Character::getStats() const
 
 	  switch (d)
 	  {
-	  case UP:
+	  case NORTH:
 		  m_animationLine = 10;
 		  break;
-	  case DOWN:
+	  case SOUTH:
 		  m_animationLine = 8;
 		  break;
-	  case LEFT:
+	  case WEST:
 		  m_animationLine = 11;
 		  break;
-	  case RIGHT:
+	  case EAST:
 		  m_animationLine = 9;
 		  break;
 	  }

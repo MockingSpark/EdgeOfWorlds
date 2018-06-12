@@ -1,3 +1,11 @@
+/**
+* //////  DoneFightingState.h  //////
+*
+* Ce fichier constient la classe d'état Done Fighting
+*
+* \author Cossec Estéban
+*
+*/
 #pragma once
 #include "GameState.h"
 class DoneFightingState :

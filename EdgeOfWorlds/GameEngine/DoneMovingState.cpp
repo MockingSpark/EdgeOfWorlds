@@ -15,16 +15,16 @@ bool DoneMovingState::handleInput(GameEngine& e, sf::Event& event)
 		switch (event.key.code)
 		{
 		case sf::Keyboard::Z:
-			map.moveCursor(UP);
+			map.moveCursor(NORTH);
 			break;
 		case sf::Keyboard::S:
-			map.moveCursor(DOWN);
+			map.moveCursor(SOUTH);
 			break;
 		case sf::Keyboard::Q:
-			map.moveCursor(LEFT);
+			map.moveCursor(WEST);
 			break;
 		case sf::Keyboard::D:
-			map.moveCursor(RIGHT);
+			map.moveCursor(EAST);
 			break;
 		case sf::Keyboard::LShift:
 			map.changeViewSide();

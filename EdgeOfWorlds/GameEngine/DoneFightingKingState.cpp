@@ -20,16 +20,16 @@ bool DoneFightingKingState::handleInput(GameEngine& e, sf::Event& event)
 			e.updateHelper(false, false, false);
 			break;
 		case sf::Keyboard::Z:
-			map.moveCursor(UP);
+			map.moveCursor(NORTH);
 			break;
 		case sf::Keyboard::S:
-			map.moveCursor(DOWN);
+			map.moveCursor(SOUTH);
 			break;
 		case sf::Keyboard::Q:
-			map.moveCursor(LEFT);
+			map.moveCursor(WEST);
 			break;
 		case sf::Keyboard::D:
-			map.moveCursor(RIGHT);
+			map.moveCursor(EAST);
 			break;
 		case sf::Keyboard::Space:
 			if (map.makeMove()) {

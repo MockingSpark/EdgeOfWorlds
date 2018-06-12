@@ -310,13 +310,13 @@ bool Map::makeHit(int skill)
 			int y = ti.pos.y - m_tileToPlay->pos.y;
 			Direction direction;
 			if (x >= 0 && y >= 0 )
-				direction = UP;
+				direction = NORTH;
 			if (x >= 0 && y < 0)
-				direction = RIGHT;
+				direction = EAST;
 			if (x < 0 && y < 0)
-				direction = LEFT;
+				direction = WEST;
 			if (x < 0 && y >= 0)
-				direction = DOWN;
+				direction = SOUTH;
 			m_tileToPlay->entity->HitAnimation(direction);
 		}
 	}
@@ -328,16 +328,16 @@ void Map::moveCursor(Direction d)
 {
 	switch (d)
 	{
-	case UP:
+	case NORTH:
 		m_cursor.pos.x += 1;
 		break;
-	case DOWN:
+	case SOUTH:
 		m_cursor.pos.x -= 1;
 		break;
-	case LEFT:
+	case WEST:
 		m_cursor.pos.y -= 1;
 		break;
-	case RIGHT:
+	case EAST:
 		m_cursor.pos.y += 1;
 		break;
 	}

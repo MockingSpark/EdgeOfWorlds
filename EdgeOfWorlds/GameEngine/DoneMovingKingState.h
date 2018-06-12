@@ -1,3 +1,11 @@
+/**
+* //////  DoneMovingKingState.h  //////
+*
+* Ce fichier constient la classe d'état Done Moving King
+*
+* \author Cossec Estéban
+*
+*/
 #pragma once
 #include "GameState.h"
 class DoneMovingKingState :

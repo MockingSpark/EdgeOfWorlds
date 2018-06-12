@@ -1,3 +1,11 @@
+/**
+* //////  EndOfTurnState.h  //////
+*
+* Ce fichier constient la classe d'état EndOfTurn
+*
+* \author Cossec Estéban
+*
+*/
 #pragma once
 #include "GameState.h"
 class EndOfTurnState :
